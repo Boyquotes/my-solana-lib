@@ -3,8 +3,8 @@
 import { useState } from 'react'
 
 export default function Home() {
-  const [tokenAccount, setTokenAccount] = useState('')
-  const [rpcUrl, setRpcUrl] = useState('https://api.mainnet-beta.solana.com')
+  const [tokenAccount, setTokenAccount] = useState('HYRYA9qpEUqPJ8rZ7hVdnhQy8iKYUvngvHUaiHQbAVy4')
+  const [rpcUrl, setRpcUrl] = useState(process.env.NEXT_PUBLIC_RPC || 'https://api.mainnet-beta.solana.com')
   const [result, setResult] = useState<any>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
@@ -45,7 +45,7 @@ export default function Home() {
               className="input"
               value={rpcUrl}
               onChange={(e: any) => setRpcUrl(e.target.value)}
-              placeholder="https://api.mainnet-beta.solana.com"
+              placeholder={process.env.NEXT_PUBLIC_RPC || "https://api.mainnet-beta.solana.com"}
             />
           </div>
           
@@ -57,7 +57,7 @@ export default function Home() {
               className="input"
               value={tokenAccount}
               onChange={(e: any) => setTokenAccount(e.target.value)}
-              placeholder="Enter a Solana token account address"
+              placeholder="HYRYA9qpEUqPJ8rZ7hVdnhQy8iKYUvngvHUaiHQbAVy4"
               required
             />
           </div>

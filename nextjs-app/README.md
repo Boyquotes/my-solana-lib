@@ -16,7 +16,13 @@ This is a Next.js application that demonstrates how to use the `my-solana-lib` l
    npm install
    ```
 
-3. Run the development server:
+3. Set up environment variables:
+   ```bash
+   cp .env.example .env.local
+   ```
+   Edit `.env.local` to configure your Solana RPC URL if needed.
+
+4. Run the development server:
    ```bash
    npm run dev
    ```
@@ -26,9 +32,13 @@ This is a Next.js application that demonstrates how to use the `my-solana-lib` l
 ## Features
 
 The app provides a simple interface to:
-- Input a Solana RPC URL
-- Input a token account address
+- Input a Solana RPC URL (defaults to `NEXT_PUBLIC_RPC` environment variable)
+- Input a token account address (defaults to a sample address)
 - Fetch and display token account information using the `my-solana-lib` library
+
+## Environment Variables
+
+- `NEXT_PUBLIC_RPC`: The default Solana RPC URL to use (defaults to mainnet if not set)
 
 ## Library Usage
 
