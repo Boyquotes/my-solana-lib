@@ -1,0 +1,4324 @@
+{
+  "address": "6V4AfucuYfgRPgw4SEwJxcTN49ubXAwT2uEb1zz2PfSZ",
+  "metadata": {
+    "name": "cybergold",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "CyberGold protocol: A decentralized gold-pegged sythetic asset."
+  },
+  "instructions": [
+    {
+      "name": "burn",
+      "discriminator": [
+        116,
+        110,
+        29,
+        56,
+        107,
+        219,
+        42,
+        93
+      ],
+      "accounts": [
+        {
+          "name": "ref_price_update"
+        },
+        {
+          "name": "collat_price_update"
+        },
+        {
+          "name": "pool_params",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  111,
+                  108,
+                  95,
+                  112,
+                  97,
+                  114,
+                  97,
+                  109,
+                  115
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "synth_mint"
+              },
+              {
+                "kind": "account",
+                "path": "collat_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "signer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "signer_collat_ata",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "signer"
+              },
+              {
+                "kind": "account",
+                "path": "collat_token_program"
+              },
+              {
+                "kind": "account",
+                "path": "collat_mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "collat_mint"
+        },
+        {
+          "name": "signer_synth_token_account",
+          "writable": true
+        },
+        {
+          "name": "synth_mint",
+          "writable": true
+        },
+        {
+          "name": "admin",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  100,
+                  109,
+                  105,
+                  110
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "collat_token_program"
+        },
+        {
+          "name": "synth_token_program"
+        },
+        {
+          "name": "associated_token_program",
+          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "rent",
+          "address": "SysvarRent111111111111111111111111111111111"
+        },
+        {
+          "name": "reward_extractor_ctx",
+          "accounts": [
+            {
+              "name": "pool_state",
+              "docs": [
+                "PoolState PDA (stores prev_lst_supply, prev_stake_pool_lamports, etc.)"
+              ],
+              "writable": true,
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "const",
+                    "value": [
+                      112,
+                      111,
+                      111,
+                      108,
+                      95,
+                      115,
+                      116,
+                      97,
+                      116,
+                      101
+                    ]
+                  },
+                  {
+                    "kind": "account",
+                    "path": "synth_mint"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "collat_mint"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "pool_params",
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "const",
+                    "value": [
+                      112,
+                      111,
+                      111,
+                      108,
+                      95,
+                      112,
+                      97,
+                      114,
+                      97,
+                      109,
+                      115
+                    ]
+                  },
+                  {
+                    "kind": "account",
+                    "path": "synth_mint"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "collat_mint"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "stake_pool"
+            },
+            {
+              "name": "pool_collat_ata",
+              "docs": [
+                "Our protocol’s LST‐denominated collateral ATA"
+              ],
+              "writable": true,
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "account",
+                    "path": "pool_state"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "collat_token_program"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "collat_mint"
+                  }
+                ],
+                "program": {
+                  "kind": "const",
+                  "value": [
+                    140,
+                    151,
+                    37,
+                    143,
+                    78,
+                    36,
+                    137,
+                    241,
+                    187,
+                    61,
+                    16,
+                    41,
+                    20,
+                    142,
+                    13,
+                    131,
+                    11,
+                    90,
+                    19,
+                    153,
+                    218,
+                    255,
+                    16,
+                    132,
+                    4,
+                    142,
+                    123,
+                    216,
+                    219,
+                    233,
+                    248,
+                    89
+                  ]
+                }
+              }
+            },
+            {
+              "name": "reward_vault",
+              "docs": [
+                "Where we actually send “extracted” yield"
+              ],
+              "writable": true,
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "account",
+                    "path": "pool_params"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "collat_token_program"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "collat_mint"
+                  }
+                ],
+                "program": {
+                  "kind": "const",
+                  "value": [
+                    140,
+                    151,
+                    37,
+                    143,
+                    78,
+                    36,
+                    137,
+                    241,
+                    187,
+                    61,
+                    16,
+                    41,
+                    20,
+                    142,
+                    13,
+                    131,
+                    11,
+                    90,
+                    19,
+                    153,
+                    218,
+                    255,
+                    16,
+                    132,
+                    4,
+                    142,
+                    123,
+                    216,
+                    219,
+                    233,
+                    248,
+                    89
+                  ]
+                }
+              }
+            },
+            {
+              "name": "collat_token_program",
+              "docs": [
+                "SPL‐Token program for the collateral mint"
+              ]
+            },
+            {
+              "name": "collat_mint",
+              "docs": [
+                "Collateral mint (needed both for CPI and for PDA seeds)"
+              ]
+            },
+            {
+              "name": "synth_mint",
+              "docs": [
+                "Synth mint (only used to derive PDAs)"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "pool_metrics_ctx",
+          "accounts": [
+            {
+              "name": "pool_collat_ata",
+              "docs": [
+                "Pool’s collateral‐denominated ATA"
+              ],
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "account",
+                    "path": "read_price_ctx.pool_state",
+                    "account": "ReadPriceCtx"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "collat_token_program"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "read_price_ctx.collat_mint",
+                    "account": "ReadPriceCtx"
+                  }
+                ],
+                "program": {
+                  "kind": "const",
+                  "value": [
+                    140,
+                    151,
+                    37,
+                    143,
+                    78,
+                    36,
+                    137,
+                    241,
+                    187,
+                    61,
+                    16,
+                    41,
+                    20,
+                    142,
+                    13,
+                    131,
+                    11,
+                    90,
+                    19,
+                    153,
+                    218,
+                    255,
+                    16,
+                    132,
+                    4,
+                    142,
+                    123,
+                    216,
+                    219,
+                    233,
+                    248,
+                    89
+                  ]
+                }
+              }
+            },
+            {
+              "name": "collat_token_program",
+              "docs": [
+                "SPL‐Token program for the collateral mint"
+              ]
+            },
+            {
+              "name": "read_price_ctx",
+              "accounts": [
+                {
+                  "name": "pool_state",
+                  "docs": [
+                    "PoolState PDA (stores prev_lst_supply, prev_stake_pool_lamports, etc.)"
+                  ],
+                  "pda": {
+                    "seeds": [
+                      {
+                        "kind": "const",
+                        "value": [
+                          112,
+                          111,
+                          111,
+                          108,
+                          95,
+                          115,
+                          116,
+                          97,
+                          116,
+                          101
+                        ]
+                      },
+                      {
+                        "kind": "account",
+                        "path": "synth_mint"
+                      },
+                      {
+                        "kind": "account",
+                        "path": "collat_mint"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "name": "pool_params",
+                  "pda": {
+                    "seeds": [
+                      {
+                        "kind": "const",
+                        "value": [
+                          112,
+                          111,
+                          111,
+                          108,
+                          95,
+                          112,
+                          97,
+                          114,
+                          97,
+                          109,
+                          115
+                        ]
+                      },
+                      {
+                        "kind": "account",
+                        "path": "synth_mint"
+                      },
+                      {
+                        "kind": "account",
+                        "path": "collat_mint"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "name": "collat_mint"
+                },
+                {
+                  "name": "synth_mint"
+                },
+                {
+                  "name": "ref_price_update"
+                },
+                {
+                  "name": "collat_price_update"
+                },
+                {
+                  "name": "stake_pool"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "deposit",
+      "discriminator": [
+        242,
+        35,
+        198,
+        137,
+        82,
+        225,
+        242,
+        182
+      ],
+      "accounts": [
+        {
+          "name": "signer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "collat_mint"
+        },
+        {
+          "name": "synth_mint"
+        },
+        {
+          "name": "vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "signer"
+              },
+              {
+                "kind": "account",
+                "path": "reward_extractor_ctx.pool_state",
+                "account": "RewardsExtractorCtx"
+              }
+            ]
+          }
+        },
+        {
+          "name": "pool_params",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  111,
+                  108,
+                  95,
+                  112,
+                  97,
+                  114,
+                  97,
+                  109,
+                  115
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "synth_mint"
+              },
+              {
+                "kind": "account",
+                "path": "collat_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "signer_collat_token_account",
+          "writable": true
+        },
+        {
+          "name": "ref_price_update"
+        },
+        {
+          "name": "collat_price_update"
+        },
+        {
+          "name": "collat_token_program"
+        },
+        {
+          "name": "stake_pool",
+          "docs": [
+            "CHECK 10. Stake Pool Account, from the SPL StakePool Program."
+          ]
+        },
+        {
+          "name": "reward_extractor_ctx",
+          "accounts": [
+            {
+              "name": "pool_state",
+              "docs": [
+                "PoolState PDA (stores prev_lst_supply, prev_stake_pool_lamports, etc.)"
+              ],
+              "writable": true,
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "const",
+                    "value": [
+                      112,
+                      111,
+                      111,
+                      108,
+                      95,
+                      115,
+                      116,
+                      97,
+                      116,
+                      101
+                    ]
+                  },
+                  {
+                    "kind": "account",
+                    "path": "synth_mint"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "collat_mint"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "pool_params",
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "const",
+                    "value": [
+                      112,
+                      111,
+                      111,
+                      108,
+                      95,
+                      112,
+                      97,
+                      114,
+                      97,
+                      109,
+                      115
+                    ]
+                  },
+                  {
+                    "kind": "account",
+                    "path": "synth_mint"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "collat_mint"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "stake_pool"
+            },
+            {
+              "name": "pool_collat_ata",
+              "docs": [
+                "Our protocol’s LST‐denominated collateral ATA"
+              ],
+              "writable": true,
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "account",
+                    "path": "pool_state"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "collat_token_program"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "collat_mint"
+                  }
+                ],
+                "program": {
+                  "kind": "const",
+                  "value": [
+                    140,
+                    151,
+                    37,
+                    143,
+                    78,
+                    36,
+                    137,
+                    241,
+                    187,
+                    61,
+                    16,
+                    41,
+                    20,
+                    142,
+                    13,
+                    131,
+                    11,
+                    90,
+                    19,
+                    153,
+                    218,
+                    255,
+                    16,
+                    132,
+                    4,
+                    142,
+                    123,
+                    216,
+                    219,
+                    233,
+                    248,
+                    89
+                  ]
+                }
+              }
+            },
+            {
+              "name": "reward_vault",
+              "docs": [
+                "Where we actually send “extracted” yield"
+              ],
+              "writable": true,
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "account",
+                    "path": "pool_params"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "collat_token_program"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "collat_mint"
+                  }
+                ],
+                "program": {
+                  "kind": "const",
+                  "value": [
+                    140,
+                    151,
+                    37,
+                    143,
+                    78,
+                    36,
+                    137,
+                    241,
+                    187,
+                    61,
+                    16,
+                    41,
+                    20,
+                    142,
+                    13,
+                    131,
+                    11,
+                    90,
+                    19,
+                    153,
+                    218,
+                    255,
+                    16,
+                    132,
+                    4,
+                    142,
+                    123,
+                    216,
+                    219,
+                    233,
+                    248,
+                    89
+                  ]
+                }
+              }
+            },
+            {
+              "name": "collat_token_program",
+              "docs": [
+                "SPL‐Token program for the collateral mint"
+              ]
+            },
+            {
+              "name": "collat_mint",
+              "docs": [
+                "Collateral mint (needed both for CPI and for PDA seeds)"
+              ]
+            },
+            {
+              "name": "synth_mint",
+              "docs": [
+                "Synth mint (only used to derive PDAs)"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "pool_metrics_ctx",
+          "accounts": [
+            {
+              "name": "pool_collat_ata",
+              "docs": [
+                "Pool’s collateral‐denominated ATA"
+              ],
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "account",
+                    "path": "read_price_ctx.pool_state",
+                    "account": "ReadPriceCtx"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "collat_token_program"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "read_price_ctx.collat_mint",
+                    "account": "ReadPriceCtx"
+                  }
+                ],
+                "program": {
+                  "kind": "const",
+                  "value": [
+                    140,
+                    151,
+                    37,
+                    143,
+                    78,
+                    36,
+                    137,
+                    241,
+                    187,
+                    61,
+                    16,
+                    41,
+                    20,
+                    142,
+                    13,
+                    131,
+                    11,
+                    90,
+                    19,
+                    153,
+                    218,
+                    255,
+                    16,
+                    132,
+                    4,
+                    142,
+                    123,
+                    216,
+                    219,
+                    233,
+                    248,
+                    89
+                  ]
+                }
+              }
+            },
+            {
+              "name": "collat_token_program",
+              "docs": [
+                "SPL‐Token program for the collateral mint"
+              ]
+            },
+            {
+              "name": "read_price_ctx",
+              "accounts": [
+                {
+                  "name": "pool_state",
+                  "docs": [
+                    "PoolState PDA (stores prev_lst_supply, prev_stake_pool_lamports, etc.)"
+                  ],
+                  "pda": {
+                    "seeds": [
+                      {
+                        "kind": "const",
+                        "value": [
+                          112,
+                          111,
+                          111,
+                          108,
+                          95,
+                          115,
+                          116,
+                          97,
+                          116,
+                          101
+                        ]
+                      },
+                      {
+                        "kind": "account",
+                        "path": "synth_mint"
+                      },
+                      {
+                        "kind": "account",
+                        "path": "collat_mint"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "name": "pool_params",
+                  "pda": {
+                    "seeds": [
+                      {
+                        "kind": "const",
+                        "value": [
+                          112,
+                          111,
+                          111,
+                          108,
+                          95,
+                          112,
+                          97,
+                          114,
+                          97,
+                          109,
+                          115
+                        ]
+                      },
+                      {
+                        "kind": "account",
+                        "path": "synth_mint"
+                      },
+                      {
+                        "kind": "account",
+                        "path": "collat_mint"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "name": "collat_mint"
+                },
+                {
+                  "name": "synth_mint"
+                },
+                {
+                  "name": "ref_price_update"
+                },
+                {
+                  "name": "collat_price_update"
+                },
+                {
+                  "name": "stake_pool"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "get_price",
+      "discriminator": [
+        238,
+        38,
+        193,
+        106,
+        228,
+        32,
+        210,
+        33
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "read_price_ctx",
+          "accounts": [
+            {
+              "name": "pool_state",
+              "docs": [
+                "PoolState PDA (stores prev_lst_supply, prev_stake_pool_lamports, etc.)"
+              ],
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "const",
+                    "value": [
+                      112,
+                      111,
+                      111,
+                      108,
+                      95,
+                      115,
+                      116,
+                      97,
+                      116,
+                      101
+                    ]
+                  },
+                  {
+                    "kind": "account",
+                    "path": "synth_mint"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "collat_mint"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "pool_params",
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "const",
+                    "value": [
+                      112,
+                      111,
+                      111,
+                      108,
+                      95,
+                      112,
+                      97,
+                      114,
+                      97,
+                      109,
+                      115
+                    ]
+                  },
+                  {
+                    "kind": "account",
+                    "path": "synth_mint"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "collat_mint"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "collat_mint"
+            },
+            {
+              "name": "synth_mint"
+            },
+            {
+              "name": "ref_price_update"
+            },
+            {
+              "name": "collat_price_update"
+            },
+            {
+              "name": "stake_pool"
+            }
+          ]
+        },
+        {
+          "name": "reward_extractor_ctx",
+          "accounts": [
+            {
+              "name": "pool_state",
+              "docs": [
+                "PoolState PDA (stores prev_lst_supply, prev_stake_pool_lamports, etc.)"
+              ],
+              "writable": true,
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "const",
+                    "value": [
+                      112,
+                      111,
+                      111,
+                      108,
+                      95,
+                      115,
+                      116,
+                      97,
+                      116,
+                      101
+                    ]
+                  },
+                  {
+                    "kind": "account",
+                    "path": "synth_mint"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "collat_mint"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "pool_params",
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "const",
+                    "value": [
+                      112,
+                      111,
+                      111,
+                      108,
+                      95,
+                      112,
+                      97,
+                      114,
+                      97,
+                      109,
+                      115
+                    ]
+                  },
+                  {
+                    "kind": "account",
+                    "path": "synth_mint"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "collat_mint"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "stake_pool"
+            },
+            {
+              "name": "pool_collat_ata",
+              "docs": [
+                "Our protocol’s LST‐denominated collateral ATA"
+              ],
+              "writable": true,
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "account",
+                    "path": "pool_state"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "collat_token_program"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "collat_mint"
+                  }
+                ],
+                "program": {
+                  "kind": "const",
+                  "value": [
+                    140,
+                    151,
+                    37,
+                    143,
+                    78,
+                    36,
+                    137,
+                    241,
+                    187,
+                    61,
+                    16,
+                    41,
+                    20,
+                    142,
+                    13,
+                    131,
+                    11,
+                    90,
+                    19,
+                    153,
+                    218,
+                    255,
+                    16,
+                    132,
+                    4,
+                    142,
+                    123,
+                    216,
+                    219,
+                    233,
+                    248,
+                    89
+                  ]
+                }
+              }
+            },
+            {
+              "name": "reward_vault",
+              "docs": [
+                "Where we actually send “extracted” yield"
+              ],
+              "writable": true,
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "account",
+                    "path": "pool_params"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "collat_token_program"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "collat_mint"
+                  }
+                ],
+                "program": {
+                  "kind": "const",
+                  "value": [
+                    140,
+                    151,
+                    37,
+                    143,
+                    78,
+                    36,
+                    137,
+                    241,
+                    187,
+                    61,
+                    16,
+                    41,
+                    20,
+                    142,
+                    13,
+                    131,
+                    11,
+                    90,
+                    19,
+                    153,
+                    218,
+                    255,
+                    16,
+                    132,
+                    4,
+                    142,
+                    123,
+                    216,
+                    219,
+                    233,
+                    248,
+                    89
+                  ]
+                }
+              }
+            },
+            {
+              "name": "collat_token_program",
+              "docs": [
+                "SPL‐Token program for the collateral mint"
+              ]
+            },
+            {
+              "name": "collat_mint",
+              "docs": [
+                "Collateral mint (needed both for CPI and for PDA seeds)"
+              ]
+            },
+            {
+              "name": "synth_mint",
+              "docs": [
+                "Synth mint (only used to derive PDAs)"
+              ]
+            }
+          ]
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "initialize_admin",
+      "discriminator": [
+        35,
+        176,
+        8,
+        143,
+        42,
+        160,
+        61,
+        158
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  100,
+                  109,
+                  105,
+                  110
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "signer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "rent",
+          "address": "SysvarRent111111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "initialize_pool",
+      "discriminator": [
+        95,
+        180,
+        10,
+        172,
+        84,
+        174,
+        232,
+        40
+      ],
+      "accounts": [
+        {
+          "name": "synth_mint"
+        },
+        {
+          "name": "collat_mint",
+          "docs": [
+            "2. Collateral Mint"
+          ]
+        },
+        {
+          "name": "pool_params",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  111,
+                  108,
+                  95,
+                  112,
+                  97,
+                  114,
+                  97,
+                  109,
+                  115
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "synth_mint"
+              },
+              {
+                "kind": "account",
+                "path": "collat_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "pool_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  111,
+                  108,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "synth_mint"
+              },
+              {
+                "kind": "account",
+                "path": "collat_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "pool_collat_ata",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "pool_state"
+              },
+              {
+                "kind": "account",
+                "path": "collat_token_program"
+              },
+              {
+                "kind": "account",
+                "path": "collat_mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "admin",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  100,
+                  109,
+                  105,
+                  110
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "signer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "collat_token_program"
+        },
+        {
+          "name": "associated_token_program",
+          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "rent",
+          "address": "SysvarRent111111111111111111111111111111111"
+        },
+        {
+          "name": "stake_pool"
+        },
+        {
+          "name": "reward_vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "pool_params"
+              },
+              {
+                "kind": "account",
+                "path": "collat_token_program"
+              },
+              {
+                "kind": "account",
+                "path": "collat_mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        }
+      ],
+      "args": [
+        {
+          "name": "collat_feed_id",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
+          "name": "ref_feed_id",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "liquidate",
+      "discriminator": [
+        223,
+        179,
+        226,
+        125,
+        48,
+        46,
+        39,
+        74
+      ],
+      "accounts": [
+        {
+          "name": "vault",
+          "writable": true
+        },
+        {
+          "name": "synth_mint",
+          "writable": true
+        },
+        {
+          "name": "admin",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  100,
+                  109,
+                  105,
+                  110
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "collat_mint"
+        },
+        {
+          "name": "pool_params",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  111,
+                  108,
+                  95,
+                  112,
+                  97,
+                  114,
+                  97,
+                  109,
+                  115
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "synth_mint"
+              },
+              {
+                "kind": "account",
+                "path": "collat_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "signer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "ref_price_update"
+        },
+        {
+          "name": "collat_price_update"
+        },
+        {
+          "name": "signer_synth_token_account",
+          "writable": true
+        },
+        {
+          "name": "signer_collat_token_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "signer"
+              },
+              {
+                "kind": "account",
+                "path": "collat_token_program"
+              },
+              {
+                "kind": "account",
+                "path": "collat_mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "collat_token_program"
+        },
+        {
+          "name": "synth_token_program"
+        },
+        {
+          "name": "associated_token_program",
+          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "rent",
+          "address": "SysvarRent111111111111111111111111111111111"
+        },
+        {
+          "name": "reward_extractor_ctx",
+          "accounts": [
+            {
+              "name": "pool_state",
+              "docs": [
+                "PoolState PDA (stores prev_lst_supply, prev_stake_pool_lamports, etc.)"
+              ],
+              "writable": true,
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "const",
+                    "value": [
+                      112,
+                      111,
+                      111,
+                      108,
+                      95,
+                      115,
+                      116,
+                      97,
+                      116,
+                      101
+                    ]
+                  },
+                  {
+                    "kind": "account",
+                    "path": "synth_mint"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "collat_mint"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "pool_params",
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "const",
+                    "value": [
+                      112,
+                      111,
+                      111,
+                      108,
+                      95,
+                      112,
+                      97,
+                      114,
+                      97,
+                      109,
+                      115
+                    ]
+                  },
+                  {
+                    "kind": "account",
+                    "path": "synth_mint"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "collat_mint"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "stake_pool"
+            },
+            {
+              "name": "pool_collat_ata",
+              "docs": [
+                "Our protocol’s LST‐denominated collateral ATA"
+              ],
+              "writable": true,
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "account",
+                    "path": "pool_state"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "collat_token_program"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "collat_mint"
+                  }
+                ],
+                "program": {
+                  "kind": "const",
+                  "value": [
+                    140,
+                    151,
+                    37,
+                    143,
+                    78,
+                    36,
+                    137,
+                    241,
+                    187,
+                    61,
+                    16,
+                    41,
+                    20,
+                    142,
+                    13,
+                    131,
+                    11,
+                    90,
+                    19,
+                    153,
+                    218,
+                    255,
+                    16,
+                    132,
+                    4,
+                    142,
+                    123,
+                    216,
+                    219,
+                    233,
+                    248,
+                    89
+                  ]
+                }
+              }
+            },
+            {
+              "name": "reward_vault",
+              "docs": [
+                "Where we actually send “extracted” yield"
+              ],
+              "writable": true,
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "account",
+                    "path": "pool_params"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "collat_token_program"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "collat_mint"
+                  }
+                ],
+                "program": {
+                  "kind": "const",
+                  "value": [
+                    140,
+                    151,
+                    37,
+                    143,
+                    78,
+                    36,
+                    137,
+                    241,
+                    187,
+                    61,
+                    16,
+                    41,
+                    20,
+                    142,
+                    13,
+                    131,
+                    11,
+                    90,
+                    19,
+                    153,
+                    218,
+                    255,
+                    16,
+                    132,
+                    4,
+                    142,
+                    123,
+                    216,
+                    219,
+                    233,
+                    248,
+                    89
+                  ]
+                }
+              }
+            },
+            {
+              "name": "collat_token_program",
+              "docs": [
+                "SPL‐Token program for the collateral mint"
+              ]
+            },
+            {
+              "name": "collat_mint",
+              "docs": [
+                "Collateral mint (needed both for CPI and for PDA seeds)"
+              ]
+            },
+            {
+              "name": "synth_mint",
+              "docs": [
+                "Synth mint (only used to derive PDAs)"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "pool_metrics_ctx",
+          "accounts": [
+            {
+              "name": "pool_collat_ata",
+              "docs": [
+                "Pool’s collateral‐denominated ATA"
+              ],
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "account",
+                    "path": "read_price_ctx.pool_state",
+                    "account": "ReadPriceCtx"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "collat_token_program"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "read_price_ctx.collat_mint",
+                    "account": "ReadPriceCtx"
+                  }
+                ],
+                "program": {
+                  "kind": "const",
+                  "value": [
+                    140,
+                    151,
+                    37,
+                    143,
+                    78,
+                    36,
+                    137,
+                    241,
+                    187,
+                    61,
+                    16,
+                    41,
+                    20,
+                    142,
+                    13,
+                    131,
+                    11,
+                    90,
+                    19,
+                    153,
+                    218,
+                    255,
+                    16,
+                    132,
+                    4,
+                    142,
+                    123,
+                    216,
+                    219,
+                    233,
+                    248,
+                    89
+                  ]
+                }
+              }
+            },
+            {
+              "name": "collat_token_program",
+              "docs": [
+                "SPL‐Token program for the collateral mint"
+              ]
+            },
+            {
+              "name": "read_price_ctx",
+              "accounts": [
+                {
+                  "name": "pool_state",
+                  "docs": [
+                    "PoolState PDA (stores prev_lst_supply, prev_stake_pool_lamports, etc.)"
+                  ],
+                  "pda": {
+                    "seeds": [
+                      {
+                        "kind": "const",
+                        "value": [
+                          112,
+                          111,
+                          111,
+                          108,
+                          95,
+                          115,
+                          116,
+                          97,
+                          116,
+                          101
+                        ]
+                      },
+                      {
+                        "kind": "account",
+                        "path": "synth_mint"
+                      },
+                      {
+                        "kind": "account",
+                        "path": "collat_mint"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "name": "pool_params",
+                  "pda": {
+                    "seeds": [
+                      {
+                        "kind": "const",
+                        "value": [
+                          112,
+                          111,
+                          111,
+                          108,
+                          95,
+                          112,
+                          97,
+                          114,
+                          97,
+                          109,
+                          115
+                        ]
+                      },
+                      {
+                        "kind": "account",
+                        "path": "synth_mint"
+                      },
+                      {
+                        "kind": "account",
+                        "path": "collat_mint"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "name": "collat_mint"
+                },
+                {
+                  "name": "synth_mint"
+                },
+                {
+                  "name": "ref_price_update"
+                },
+                {
+                  "name": "collat_price_update"
+                },
+                {
+                  "name": "stake_pool"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "mint",
+      "discriminator": [
+        51,
+        57,
+        225,
+        47,
+        182,
+        146,
+        137,
+        166
+      ],
+      "accounts": [
+        {
+          "name": "ref_price_update"
+        },
+        {
+          "name": "collat_price_update"
+        },
+        {
+          "name": "pool_params",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  111,
+                  108,
+                  95,
+                  112,
+                  97,
+                  114,
+                  97,
+                  109,
+                  115
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "synth_mint"
+              },
+              {
+                "kind": "account",
+                "path": "collat_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "signer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "signer_collat_token_account",
+          "writable": true
+        },
+        {
+          "name": "signer_synth_ata",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "signer"
+              },
+              {
+                "kind": "account",
+                "path": "synth_token_program"
+              },
+              {
+                "kind": "account",
+                "path": "synth_mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "collat_mint"
+        },
+        {
+          "name": "synth_mint",
+          "writable": true
+        },
+        {
+          "name": "admin",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  100,
+                  109,
+                  105,
+                  110
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "collat_token_program"
+        },
+        {
+          "name": "synth_token_program"
+        },
+        {
+          "name": "associated_token_program",
+          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "rent",
+          "address": "SysvarRent111111111111111111111111111111111"
+        },
+        {
+          "name": "reward_extractor_ctx",
+          "accounts": [
+            {
+              "name": "pool_state",
+              "docs": [
+                "PoolState PDA (stores prev_lst_supply, prev_stake_pool_lamports, etc.)"
+              ],
+              "writable": true,
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "const",
+                    "value": [
+                      112,
+                      111,
+                      111,
+                      108,
+                      95,
+                      115,
+                      116,
+                      97,
+                      116,
+                      101
+                    ]
+                  },
+                  {
+                    "kind": "account",
+                    "path": "synth_mint"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "collat_mint"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "pool_params",
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "const",
+                    "value": [
+                      112,
+                      111,
+                      111,
+                      108,
+                      95,
+                      112,
+                      97,
+                      114,
+                      97,
+                      109,
+                      115
+                    ]
+                  },
+                  {
+                    "kind": "account",
+                    "path": "synth_mint"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "collat_mint"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "stake_pool"
+            },
+            {
+              "name": "pool_collat_ata",
+              "docs": [
+                "Our protocol’s LST‐denominated collateral ATA"
+              ],
+              "writable": true,
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "account",
+                    "path": "pool_state"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "collat_token_program"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "collat_mint"
+                  }
+                ],
+                "program": {
+                  "kind": "const",
+                  "value": [
+                    140,
+                    151,
+                    37,
+                    143,
+                    78,
+                    36,
+                    137,
+                    241,
+                    187,
+                    61,
+                    16,
+                    41,
+                    20,
+                    142,
+                    13,
+                    131,
+                    11,
+                    90,
+                    19,
+                    153,
+                    218,
+                    255,
+                    16,
+                    132,
+                    4,
+                    142,
+                    123,
+                    216,
+                    219,
+                    233,
+                    248,
+                    89
+                  ]
+                }
+              }
+            },
+            {
+              "name": "reward_vault",
+              "docs": [
+                "Where we actually send “extracted” yield"
+              ],
+              "writable": true,
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "account",
+                    "path": "pool_params"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "collat_token_program"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "collat_mint"
+                  }
+                ],
+                "program": {
+                  "kind": "const",
+                  "value": [
+                    140,
+                    151,
+                    37,
+                    143,
+                    78,
+                    36,
+                    137,
+                    241,
+                    187,
+                    61,
+                    16,
+                    41,
+                    20,
+                    142,
+                    13,
+                    131,
+                    11,
+                    90,
+                    19,
+                    153,
+                    218,
+                    255,
+                    16,
+                    132,
+                    4,
+                    142,
+                    123,
+                    216,
+                    219,
+                    233,
+                    248,
+                    89
+                  ]
+                }
+              }
+            },
+            {
+              "name": "collat_token_program",
+              "docs": [
+                "SPL‐Token program for the collateral mint"
+              ]
+            },
+            {
+              "name": "collat_mint",
+              "docs": [
+                "Collateral mint (needed both for CPI and for PDA seeds)"
+              ]
+            },
+            {
+              "name": "synth_mint",
+              "docs": [
+                "Synth mint (only used to derive PDAs)"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "pool_metrics_ctx",
+          "accounts": [
+            {
+              "name": "pool_collat_ata",
+              "docs": [
+                "Pool’s collateral‐denominated ATA"
+              ],
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "account",
+                    "path": "read_price_ctx.pool_state",
+                    "account": "ReadPriceCtx"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "collat_token_program"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "read_price_ctx.collat_mint",
+                    "account": "ReadPriceCtx"
+                  }
+                ],
+                "program": {
+                  "kind": "const",
+                  "value": [
+                    140,
+                    151,
+                    37,
+                    143,
+                    78,
+                    36,
+                    137,
+                    241,
+                    187,
+                    61,
+                    16,
+                    41,
+                    20,
+                    142,
+                    13,
+                    131,
+                    11,
+                    90,
+                    19,
+                    153,
+                    218,
+                    255,
+                    16,
+                    132,
+                    4,
+                    142,
+                    123,
+                    216,
+                    219,
+                    233,
+                    248,
+                    89
+                  ]
+                }
+              }
+            },
+            {
+              "name": "collat_token_program",
+              "docs": [
+                "SPL‐Token program for the collateral mint"
+              ]
+            },
+            {
+              "name": "read_price_ctx",
+              "accounts": [
+                {
+                  "name": "pool_state",
+                  "docs": [
+                    "PoolState PDA (stores prev_lst_supply, prev_stake_pool_lamports, etc.)"
+                  ],
+                  "pda": {
+                    "seeds": [
+                      {
+                        "kind": "const",
+                        "value": [
+                          112,
+                          111,
+                          111,
+                          108,
+                          95,
+                          115,
+                          116,
+                          97,
+                          116,
+                          101
+                        ]
+                      },
+                      {
+                        "kind": "account",
+                        "path": "synth_mint"
+                      },
+                      {
+                        "kind": "account",
+                        "path": "collat_mint"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "name": "pool_params",
+                  "pda": {
+                    "seeds": [
+                      {
+                        "kind": "const",
+                        "value": [
+                          112,
+                          111,
+                          111,
+                          108,
+                          95,
+                          112,
+                          97,
+                          114,
+                          97,
+                          109,
+                          115
+                        ]
+                      },
+                      {
+                        "kind": "account",
+                        "path": "synth_mint"
+                      },
+                      {
+                        "kind": "account",
+                        "path": "collat_mint"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "name": "collat_mint"
+                },
+                {
+                  "name": "synth_mint"
+                },
+                {
+                  "name": "ref_price_update"
+                },
+                {
+                  "name": "collat_price_update"
+                },
+                {
+                  "name": "stake_pool"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "open_vault",
+      "discriminator": [
+        181,
+        248,
+        228,
+        67,
+        6,
+        175,
+        37,
+        167
+      ],
+      "accounts": [
+        {
+          "name": "signer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "collat_mint"
+        },
+        {
+          "name": "synth_mint"
+        },
+        {
+          "name": "pool_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  111,
+                  108,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "synth_mint"
+              },
+              {
+                "kind": "account",
+                "path": "collat_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "signer"
+              },
+              {
+                "kind": "account",
+                "path": "pool_state"
+              }
+            ]
+          }
+        },
+        {
+          "name": "pool_params",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  111,
+                  108,
+                  95,
+                  112,
+                  97,
+                  114,
+                  97,
+                  109,
+                  115
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "synth_mint"
+              },
+              {
+                "kind": "account",
+                "path": "collat_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "rent",
+          "address": "SysvarRent111111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "max_exposure_pct",
+          "type": {
+            "option": "u16"
+          }
+        }
+      ]
+    },
+    {
+      "name": "withdraw",
+      "discriminator": [
+        183,
+        18,
+        70,
+        156,
+        148,
+        109,
+        161,
+        34
+      ],
+      "accounts": [
+        {
+          "name": "synth_mint"
+        },
+        {
+          "name": "collat_mint"
+        },
+        {
+          "name": "pool_params",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  111,
+                  108,
+                  95,
+                  112,
+                  97,
+                  114,
+                  97,
+                  109,
+                  115
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "synth_mint"
+              },
+              {
+                "kind": "account",
+                "path": "collat_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "signer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "signer"
+              },
+              {
+                "kind": "account",
+                "path": "reward_extractor_ctx.pool_state",
+                "account": "RewardsExtractorCtx"
+              }
+            ]
+          }
+        },
+        {
+          "name": "ref_price_update"
+        },
+        {
+          "name": "collat_price_update"
+        },
+        {
+          "name": "signer_collat_token_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "signer"
+              },
+              {
+                "kind": "account",
+                "path": "collat_token_program"
+              },
+              {
+                "kind": "account",
+                "path": "collat_mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "collat_token_program"
+        },
+        {
+          "name": "associated_token_program",
+          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "rent",
+          "address": "SysvarRent111111111111111111111111111111111"
+        },
+        {
+          "name": "reward_extractor_ctx",
+          "accounts": [
+            {
+              "name": "pool_state",
+              "docs": [
+                "PoolState PDA (stores prev_lst_supply, prev_stake_pool_lamports, etc.)"
+              ],
+              "writable": true,
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "const",
+                    "value": [
+                      112,
+                      111,
+                      111,
+                      108,
+                      95,
+                      115,
+                      116,
+                      97,
+                      116,
+                      101
+                    ]
+                  },
+                  {
+                    "kind": "account",
+                    "path": "synth_mint"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "collat_mint"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "pool_params",
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "const",
+                    "value": [
+                      112,
+                      111,
+                      111,
+                      108,
+                      95,
+                      112,
+                      97,
+                      114,
+                      97,
+                      109,
+                      115
+                    ]
+                  },
+                  {
+                    "kind": "account",
+                    "path": "synth_mint"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "collat_mint"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "stake_pool"
+            },
+            {
+              "name": "pool_collat_ata",
+              "docs": [
+                "Our protocol’s LST‐denominated collateral ATA"
+              ],
+              "writable": true,
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "account",
+                    "path": "pool_state"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "collat_token_program"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "collat_mint"
+                  }
+                ],
+                "program": {
+                  "kind": "const",
+                  "value": [
+                    140,
+                    151,
+                    37,
+                    143,
+                    78,
+                    36,
+                    137,
+                    241,
+                    187,
+                    61,
+                    16,
+                    41,
+                    20,
+                    142,
+                    13,
+                    131,
+                    11,
+                    90,
+                    19,
+                    153,
+                    218,
+                    255,
+                    16,
+                    132,
+                    4,
+                    142,
+                    123,
+                    216,
+                    219,
+                    233,
+                    248,
+                    89
+                  ]
+                }
+              }
+            },
+            {
+              "name": "reward_vault",
+              "docs": [
+                "Where we actually send “extracted” yield"
+              ],
+              "writable": true,
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "account",
+                    "path": "pool_params"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "collat_token_program"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "collat_mint"
+                  }
+                ],
+                "program": {
+                  "kind": "const",
+                  "value": [
+                    140,
+                    151,
+                    37,
+                    143,
+                    78,
+                    36,
+                    137,
+                    241,
+                    187,
+                    61,
+                    16,
+                    41,
+                    20,
+                    142,
+                    13,
+                    131,
+                    11,
+                    90,
+                    19,
+                    153,
+                    218,
+                    255,
+                    16,
+                    132,
+                    4,
+                    142,
+                    123,
+                    216,
+                    219,
+                    233,
+                    248,
+                    89
+                  ]
+                }
+              }
+            },
+            {
+              "name": "collat_token_program",
+              "docs": [
+                "SPL‐Token program for the collateral mint"
+              ]
+            },
+            {
+              "name": "collat_mint",
+              "docs": [
+                "Collateral mint (needed both for CPI and for PDA seeds)"
+              ]
+            },
+            {
+              "name": "synth_mint",
+              "docs": [
+                "Synth mint (only used to derive PDAs)"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "pool_metrics_ctx",
+          "accounts": [
+            {
+              "name": "pool_collat_ata",
+              "docs": [
+                "Pool’s collateral‐denominated ATA"
+              ],
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "account",
+                    "path": "read_price_ctx.pool_state",
+                    "account": "ReadPriceCtx"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "collat_token_program"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "read_price_ctx.collat_mint",
+                    "account": "ReadPriceCtx"
+                  }
+                ],
+                "program": {
+                  "kind": "const",
+                  "value": [
+                    140,
+                    151,
+                    37,
+                    143,
+                    78,
+                    36,
+                    137,
+                    241,
+                    187,
+                    61,
+                    16,
+                    41,
+                    20,
+                    142,
+                    13,
+                    131,
+                    11,
+                    90,
+                    19,
+                    153,
+                    218,
+                    255,
+                    16,
+                    132,
+                    4,
+                    142,
+                    123,
+                    216,
+                    219,
+                    233,
+                    248,
+                    89
+                  ]
+                }
+              }
+            },
+            {
+              "name": "collat_token_program",
+              "docs": [
+                "SPL‐Token program for the collateral mint"
+              ]
+            },
+            {
+              "name": "read_price_ctx",
+              "accounts": [
+                {
+                  "name": "pool_state",
+                  "docs": [
+                    "PoolState PDA (stores prev_lst_supply, prev_stake_pool_lamports, etc.)"
+                  ],
+                  "pda": {
+                    "seeds": [
+                      {
+                        "kind": "const",
+                        "value": [
+                          112,
+                          111,
+                          111,
+                          108,
+                          95,
+                          115,
+                          116,
+                          97,
+                          116,
+                          101
+                        ]
+                      },
+                      {
+                        "kind": "account",
+                        "path": "synth_mint"
+                      },
+                      {
+                        "kind": "account",
+                        "path": "collat_mint"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "name": "pool_params",
+                  "pda": {
+                    "seeds": [
+                      {
+                        "kind": "const",
+                        "value": [
+                          112,
+                          111,
+                          111,
+                          108,
+                          95,
+                          112,
+                          97,
+                          114,
+                          97,
+                          109,
+                          115
+                        ]
+                      },
+                      {
+                        "kind": "account",
+                        "path": "synth_mint"
+                      },
+                      {
+                        "kind": "account",
+                        "path": "collat_mint"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "name": "collat_mint"
+                },
+                {
+                  "name": "synth_mint"
+                },
+                {
+                  "name": "ref_price_update"
+                },
+                {
+                  "name": "collat_price_update"
+                },
+                {
+                  "name": "stake_pool"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "Admin",
+      "discriminator": [
+        244,
+        158,
+        220,
+        65,
+        8,
+        73,
+        4,
+        65
+      ]
+    },
+    {
+      "name": "PoolParams",
+      "discriminator": [
+        252,
+        18,
+        112,
+        141,
+        192,
+        181,
+        114,
+        2
+      ]
+    },
+    {
+      "name": "PoolState",
+      "discriminator": [
+        247,
+        237,
+        227,
+        245,
+        215,
+        195,
+        222,
+        70
+      ]
+    },
+    {
+      "name": "PriceUpdateV2",
+      "discriminator": [
+        34,
+        241,
+        35,
+        99,
+        157,
+        126,
+        244,
+        205
+      ]
+    },
+    {
+      "name": "Vault",
+      "discriminator": [
+        211,
+        8,
+        232,
+        43,
+        2,
+        152,
+        117,
+        119
+      ]
+    }
+  ],
+  "events": [
+    {
+      "name": "AdminInitialized",
+      "discriminator": [
+        237,
+        223,
+        71,
+        11,
+        140,
+        218,
+        196,
+        171
+      ]
+    },
+    {
+      "name": "CollateralDeposited",
+      "discriminator": [
+        244,
+        62,
+        77,
+        11,
+        135,
+        112,
+        61,
+        96
+      ]
+    },
+    {
+      "name": "CollateralWithdrawn",
+      "discriminator": [
+        51,
+        224,
+        133,
+        106,
+        74,
+        173,
+        72,
+        82
+      ]
+    },
+    {
+      "name": "LiquidationTriggered",
+      "discriminator": [
+        128,
+        175,
+        190,
+        188,
+        56,
+        74,
+        68,
+        230
+      ]
+    },
+    {
+      "name": "MintInitialized",
+      "discriminator": [
+        46,
+        171,
+        107,
+        161,
+        175,
+        104,
+        236,
+        230
+      ]
+    },
+    {
+      "name": "PoolInitialized",
+      "discriminator": [
+        100,
+        118,
+        173,
+        87,
+        12,
+        198,
+        254,
+        229
+      ]
+    },
+    {
+      "name": "PurchaseExecuted",
+      "discriminator": [
+        119,
+        106,
+        168,
+        136,
+        190,
+        113,
+        126,
+        104
+      ]
+    },
+    {
+      "name": "RedeemExecuted",
+      "discriminator": [
+        71,
+        65,
+        43,
+        216,
+        175,
+        156,
+        151,
+        205
+      ]
+    },
+    {
+      "name": "VaultClosed",
+      "discriminator": [
+        238,
+        129,
+        38,
+        228,
+        227,
+        118,
+        249,
+        215
+      ]
+    },
+    {
+      "name": "VaultLiquidated",
+      "discriminator": [
+        17,
+        195,
+        67,
+        17,
+        198,
+        246,
+        82,
+        63
+      ]
+    },
+    {
+      "name": "VaultOpened",
+      "discriminator": [
+        198,
+        250,
+        195,
+        25,
+        26,
+        107,
+        197,
+        16
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "Unauthorized",
+      "msg": "Unauthorized operation."
+    },
+    {
+      "code": 6001,
+      "name": "WithdrawAmountTooHigh",
+      "msg": "Withdraw amount is too high."
+    },
+    {
+      "code": 6002,
+      "name": "IncorrectLeverage",
+      "msg": "Incorrect leverage."
+    },
+    {
+      "code": 6003,
+      "name": "IncorrectFeedId",
+      "msg": "Incorrect Price Feed Id."
+    },
+    {
+      "code": 6004,
+      "name": "IncorrectCollatMint",
+      "msg": "Incorrect Collat Mint."
+    },
+    {
+      "code": 6005,
+      "name": "CollateralRatioTooLow",
+      "msg": "Not enough collateral."
+    },
+    {
+      "code": 6006,
+      "name": "MathOverflow",
+      "msg": "Math Overflow."
+    },
+    {
+      "code": 6007,
+      "name": "DivisionByZero",
+      "msg": "Division by Zero."
+    },
+    {
+      "code": 6008,
+      "name": "NonLiquidableVault",
+      "msg": "The Vault is not liquidable."
+    },
+    {
+      "code": 6009,
+      "name": "NotEnoughToken",
+      "msg": "Not enough token available."
+    },
+    {
+      "code": 6010,
+      "name": "InvalidPriceFeedId",
+      "msg": "Price Feed Id is not valid."
+    },
+    {
+      "code": 6011,
+      "name": "PriceFetchError",
+      "msg": "Error fetching price."
+    },
+    {
+      "code": 6012,
+      "name": "InvalidPriceData",
+      "msg": "Invalide price data."
+    },
+    {
+      "code": 6013,
+      "name": "InsufficientEquity",
+      "msg": "Pool equity is insufficient."
+    },
+    {
+      "code": 6014,
+      "name": "BootstrapTooSmall",
+      "msg": "First deposit amount should be at least 1 collateral token."
+    },
+    {
+      "code": 6015,
+      "name": "ZeroDeposit",
+      "msg": "Deposit amount should be greater than zero."
+    },
+    {
+      "code": 6016,
+      "name": "LiquidationNotAllowed",
+      "msg": "The Pool do not have any liquidable asset."
+    },
+    {
+      "code": 6017,
+      "name": "ZeroNotAllowed",
+      "msg": "This instruction require a non-zero amount."
+    },
+    {
+      "code": 6018,
+      "name": "LiquidationAmountTooHigh",
+      "msg": "The amount is bigger than the liquidable amount."
+    },
+    {
+      "code": 6019,
+      "name": "ConversionError",
+      "msg": "Not able to convert to requested type."
+    },
+    {
+      "code": 6020,
+      "name": "InvalidPriceFeed",
+      "msg": "Fallback price feed can only be the Shard 0."
+    },
+    {
+      "code": 6021,
+      "name": "PublishTimeTooOld",
+      "msg": "The Publish Time of the price feed is too old."
+    },
+    {
+      "code": 6022,
+      "name": "InvalidZeroAmount",
+      "msg": "The amount provided has to be greater than zero."
+    },
+    {
+      "code": 6023,
+      "name": "InvalidTokenProgram",
+      "msg": "The Token Program provided is invalid."
+    },
+    {
+      "code": 6024,
+      "name": "InvalidAuthority",
+      "msg": "Mint Authority must be set to Pool State PDA."
+    },
+    {
+      "code": 6025,
+      "name": "MintAmountExceedsLimit",
+      "msg": "Requested amount to mint exceeds the current mintable amount."
+    },
+    {
+      "code": 6026,
+      "name": "InsufficientPoolCollateral",
+      "msg": "The pool doesn't hold enough collateral."
+    },
+    {
+      "code": 6027,
+      "name": "InvalidPubkey",
+      "msg": "The public key provided is invalid."
+    },
+    {
+      "code": 6028,
+      "name": "MaxExposureTooHigh",
+      "msg": "The maximum exposure provided is above the Pool ceiling."
+    },
+    {
+      "code": 6029,
+      "name": "MaxExposureTooLow",
+      "msg": "The maximum exposure provided is below the Pool floor."
+    },
+    {
+      "code": 6030,
+      "name": "InsufficientAmount",
+      "msg": "The amount value is insufficient."
+    },
+    {
+      "code": 6031,
+      "name": "VaultNotLiquidatable",
+      "msg": "The Vault is not liquidatable."
+    },
+    {
+      "code": 6032,
+      "name": "LiquidationAmountTooLow",
+      "msg": "The amount provided for liquidation is too low."
+    },
+    {
+      "code": 6033,
+      "name": "InvalidMintAuthority",
+      "msg": "The Mint authority isn't valid."
+    },
+    {
+      "code": 6034,
+      "name": "InvalidStakePoolState",
+      "msg": "The provided StakePool State account isn't valid."
+    },
+    {
+      "code": 6035,
+      "name": "Infaillible",
+      "msg": "This error will never happen."
+    }
+  ],
+  "types": [
+    {
+      "name": "Admin",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "governor",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "AdminInitialized",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "governor",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "CollateralDeposited",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "vault",
+            "type": "pubkey"
+          },
+          {
+            "name": "owner",
+            "type": "pubkey"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "CollateralWithdrawn",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "vault",
+            "type": "pubkey"
+          },
+          {
+            "name": "owner",
+            "type": "pubkey"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "shares",
+            "type": "u128"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LiquidationTriggered",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "pool",
+            "type": "pubkey"
+          },
+          {
+            "name": "liquidator",
+            "type": "pubkey"
+          },
+          {
+            "name": "synth_amount",
+            "type": "u64"
+          },
+          {
+            "name": "fair_collat_amount",
+            "type": "u64"
+          },
+          {
+            "name": "reward_colla_amount",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "MintInitialized",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "synt_mint",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "PoolInitialized",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "synt_mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "collat_mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "ref_feed_id",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "collat_feed_id",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "liquidation_threshold",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "PoolParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "version",
+            "type": "u8"
+          },
+          {
+            "name": "admin",
+            "type": "pubkey"
+          },
+          {
+            "name": "collat_mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "synth_mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "collat_feed_id",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "ref_feed_id",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "price_factor_signif",
+            "type": "u64"
+          },
+          {
+            "name": "price_factor_exp",
+            "type": "i32"
+          },
+          {
+            "name": "collat_price_max_age",
+            "type": "u64"
+          },
+          {
+            "name": "ref_price_max_age",
+            "type": "u64"
+          },
+          {
+            "name": "ref_fallback_max_age",
+            "type": "u64"
+          },
+          {
+            "name": "ref_fallback_key",
+            "type": "pubkey"
+          },
+          {
+            "name": "min_bootstrap_amount",
+            "type": "u64"
+          },
+          {
+            "name": "cr_liquidation_threshold",
+            "type": "u64"
+          },
+          {
+            "name": "liquidation_discount",
+            "type": "u64"
+          },
+          {
+            "name": "exposure_floor_pct",
+            "type": "u16"
+          },
+          {
+            "name": "default_max_exposure_pct",
+            "type": "u16"
+          },
+          {
+            "name": "exposure_ceil_pct",
+            "type": "u16"
+          },
+          {
+            "name": "is_lst_collateral",
+            "type": "bool"
+          },
+          {
+            "name": "lst_stake_pool",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "PoolState",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "version",
+            "type": "u8"
+          },
+          {
+            "name": "shares",
+            "type": "u128"
+          },
+          {
+            "name": "supply",
+            "type": "u64"
+          },
+          {
+            "name": "total_realized_equity",
+            "type": "u64"
+          },
+          {
+            "name": "max_exposure_pct_fp9",
+            "type": "u64"
+          },
+          {
+            "name": "lst_supply",
+            "type": "u64"
+          },
+          {
+            "name": "stake_pool_lamports",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "PriceFeedMessage",
+      "repr": {
+        "kind": "c"
+      },
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "feed_id",
+            "docs": [
+              "`FeedId` but avoid the type alias because of compatibility issues with Anchor's `idl-build` feature."
+            ],
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "price",
+            "type": "i64"
+          },
+          {
+            "name": "conf",
+            "type": "u64"
+          },
+          {
+            "name": "exponent",
+            "type": "i32"
+          },
+          {
+            "name": "publish_time",
+            "docs": [
+              "The timestamp of this price update in seconds"
+            ],
+            "type": "i64"
+          },
+          {
+            "name": "prev_publish_time",
+            "docs": [
+              "The timestamp of the previous price update. This field is intended to allow users to",
+              "identify the single unique price update for any moment in time:",
+              "for any time t, the unique update is the one such that prev_publish_time < t <= publish_time.",
+              "",
+              "Note that there may not be such an update while we are migrating to the new message-sending logic,",
+              "as some price updates on pythnet may not be sent to other chains (because the message-sending",
+              "logic may not have triggered). We can solve this problem by making the message-sending mandatory",
+              "(which we can do once publishers have migrated over).",
+              "",
+              "Additionally, this field may be equal to publish_time if the message is sent on a slot where",
+              "where the aggregation was unsuccesful. This problem will go away once all publishers have",
+              "migrated over to a recent version of pyth-agent."
+            ],
+            "type": "i64"
+          },
+          {
+            "name": "ema_price",
+            "type": "i64"
+          },
+          {
+            "name": "ema_conf",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "PriceUpdateV2",
+      "docs": [
+        "A price update account. This account is used by the Pyth Receiver program to store a verified price update from a Pyth price feed.",
+        "It contains:",
+        "- `write_authority`: The write authority for this account. This authority can close this account to reclaim rent or update the account to contain a different price update.",
+        "- `verification_level`: The [`VerificationLevel`] of this price update. This represents how many Wormhole guardian signatures have been verified for this price update.",
+        "- `price_message`: The actual price update.",
+        "- `posted_slot`: The slot at which this price update was posted."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "write_authority",
+            "type": "pubkey"
+          },
+          {
+            "name": "verification_level",
+            "type": {
+              "defined": {
+                "name": "VerificationLevel"
+              }
+            }
+          },
+          {
+            "name": "price_message",
+            "type": {
+              "defined": {
+                "name": "PriceFeedMessage"
+              }
+            }
+          },
+          {
+            "name": "posted_slot",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "PurchaseExecuted",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "signer",
+            "type": "pubkey"
+          },
+          {
+            "name": "synth_amount",
+            "type": "u64"
+          },
+          {
+            "name": "collat_amount",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "RedeemExecuted",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "signer",
+            "type": "pubkey"
+          },
+          {
+            "name": "synth_amount",
+            "type": "u64"
+          },
+          {
+            "name": "collat_amount",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Vault",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "version",
+            "type": "u8"
+          },
+          {
+            "name": "owner",
+            "type": "pubkey"
+          },
+          {
+            "name": "max_exposure_pct",
+            "type": "u16"
+          },
+          {
+            "name": "entry_pnl_accum",
+            "type": "i128"
+          },
+          {
+            "name": "entry_equity",
+            "type": "u64"
+          },
+          {
+            "name": "shares",
+            "type": "u128"
+          }
+        ]
+      }
+    },
+    {
+      "name": "VaultClosed",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "vault",
+            "type": "pubkey"
+          },
+          {
+            "name": "owner",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "VaultLiquidated",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "vault",
+            "type": "pubkey"
+          },
+          {
+            "name": "owner",
+            "type": "pubkey"
+          },
+          {
+            "name": "liquidator",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "VaultOpened",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "vault",
+            "type": "pubkey"
+          },
+          {
+            "name": "owner",
+            "type": "pubkey"
+          },
+          {
+            "name": "max_exposure_pct",
+            "type": "u16"
+          }
+        ]
+      }
+    },
+    {
+      "name": "VerificationLevel",
+      "docs": [
+        "Pyth price updates are bridged to all blockchains via Wormhole.",
+        "Using the price updates on another chain requires verifying the signatures of the Wormhole guardians.",
+        "The usual process is to check the signatures for two thirds of the total number of guardians, but this can be cumbersome on Solana because of the transaction size limits,",
+        "so we also allow for partial verification.",
+        "",
+        "This enum represents how much a price update has been verified:",
+        "- If `Full`, we have verified the signatures for two thirds of the current guardians.",
+        "- If `Partial`, only `num_signatures` guardian signatures have been checked.",
+        "",
+        "# Warning",
+        "Using partially verified price updates is dangerous, as it lowers the threshold of guardians that need to collude to produce a malicious price update."
+      ],
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Partial",
+            "fields": [
+              {
+                "name": "num_signatures",
+                "type": "u8"
+              }
+            ]
+          },
+          {
+            "name": "Full"
+          }
+        ]
+      }
+    }
+  ]
+}
