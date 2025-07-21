@@ -1,0 +1,31 @@
+{
+  "name": "my-solana-lib",
+  "version": "0.1.0",
+  "description": "A simple Solana JS package for Node and Browser",
+  "type": "module",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs.js",
+      "import": "./dist/index.esm.js"
+    }
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@solana/spl-token": "^0.3.5",
+    "@solana/web3.js": "^1.93.5"
+  },
+  "devDependencies": {
+    "@types/node-fetch": "^2.6.12",
+    "rollup": "^4.0.0",
+    "rollup-plugin-typescript2": "^0.34.0",
+    "typescript": "^5.0.0"
+  },
+  "author": "Your Name",
+  "license": "MIT"
+}
