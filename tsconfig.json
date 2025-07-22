@@ -5,9 +5,14 @@
     "moduleResolution": "Node",
     "declaration": true,
     "outDir": "dist",
+    // "rootDir": "./src",
     "strict": true,
     "esModuleInterop": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": true
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": ["node_modules", "dist", "nextjs-app"]
 }

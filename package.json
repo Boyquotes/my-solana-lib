@@ -23,6 +23,7 @@
     "@solana/web3.js": "^1.93.5"
   },
   "devDependencies": {
+    "@rollup/plugin-json": "^6.1.0",
     "@types/node-fetch": "^2.6.12",
     "rollup": "^4.0.0",
     "rollup-plugin-typescript2": "^0.34.0",

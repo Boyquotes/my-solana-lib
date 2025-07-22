@@ -1,4 +1,5 @@
 import typescript from 'rollup-plugin-typescript2';
+import json from '@rollup/plugin-json';
 
 export default {
   input: 'src/index.ts',
@@ -14,7 +15,7 @@ export default {
       sourcemap: true,
     },
   ],
-  plugins: [typescript()],
+  plugins: [typescript(), json()],
   external: [
     '@solana/web3.js',
     '@solana/spl-token',
