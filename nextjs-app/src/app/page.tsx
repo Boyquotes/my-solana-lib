@@ -8,6 +8,18 @@ export default function Home() {
   const [result, setResult] = useState<any>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [programId, setProgramId] = useState<string>('')
+
+  const handleGetProgramId = async () => {
+    try {
+      const { CyberGoldSDK } = await import('my-solana-lib')
+      const sdk = new CyberGoldSDK()
+      const id = sdk.getProgramId().toString()
+      setProgramId(id)
+    } catch (err: any) {
+      setError(err?.message || 'Failed to get program ID')
+    }
+  }
 
   const handleSubmit = async (e: any) => {
     e.preventDefault()
@@ -35,6 +47,23 @@ export default function Home() {
     <div className="container">
       <h1>CyberGold Solana SDK Demo</h1>
       <p>This demo uses the CyberGoldSDK from my-solana-lib to fetch token account information.</p>
+      
+      <div className="card">
+        <h3>Program Information</h3>
+        <button 
+          type="button" 
+          className="button" 
+          onClick={handleGetProgramId}
+          style={{ marginBottom: '1rem' }}
+        >
+          Get Program ID
+        </button>
+        {programId && (
+          <div className="result">
+            <strong>Program ID:</strong> {programId}
+          </div>
+        )}
+      </div>
       
       <div className="card">
         <form onSubmit={handleSubmit}>
