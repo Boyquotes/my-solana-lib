@@ -1,8 +1,8 @@
 import './globals.css'
 
 export const metadata = {
-  title: 'Solana Library Demo',
-  description: 'Demo app using my-solana-lib',
+  title: 'CyberGold SDK Demo',
+  description: 'Demo app using CyberGold Solana SDK from my-solana-lib',
 }
 
 export default function RootLayout({

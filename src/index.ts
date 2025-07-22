@@ -23,3 +23,18 @@ export async function ensureNodeFetch() {
     globalThis.fetch = fetchModule.default || fetchModule;
   }
 }
+
+
+// export class CyberGoldSDK extends EventEmitter {
+export class CyberGoldSDK {
+  constructor() {
+    // Initialize SDK
+  }
+
+  // Add methods for interacting with the Solana blockchain
+  async getTokenAccountInfo(rpcUrl: string, tokenAccount: string) {
+    return getTokenAccountInfo(rpcUrl, tokenAccount);
+  }
+
+
+}

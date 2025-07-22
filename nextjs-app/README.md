@@ -1,6 +1,6 @@
-# Next.js Solana Library Demo
+# CyberGold SDK Next.js Demo
 
-This is a Next.js application that demonstrates how to use the `my-solana-lib` library.
+This is a Next.js application that demonstrates how to use the CyberGold Solana SDK from the `my-solana-lib` package.
 
 ## Setup
 
@@ -34,7 +34,7 @@ This is a Next.js application that demonstrates how to use the `my-solana-lib` l
 The app provides a simple interface to:
 - Input a Solana RPC URL (defaults to `NEXT_PUBLIC_RPC` environment variable)
 - Input a token account address (defaults to a sample address)
-- Fetch and display token account information using the `my-solana-lib` library
+- Fetch and display token account information using the `CyberGoldSDK` from my-solana-lib
 
 ## Environment Variables
 
@@ -42,13 +42,14 @@ The app provides a simple interface to:
 
 ## Library Usage
 
-The app imports and uses the `getTokenAccountInfo` function from the parent library:
+The app imports and uses the `CyberGoldSDK` class from the parent library:
 
 ```typescript
-import { getTokenAccountInfo } from 'my-solana-lib'
+import { CyberGoldSDK } from 'my-solana-lib'
 
 // Usage
-const result = await getTokenAccountInfo(rpcUrl, tokenAccount)
+const sdk = new CyberGoldSDK()
+const result = await sdk.getTokenAccountInfo(rpcUrl, tokenAccount)
 ```
 
 ## Notes

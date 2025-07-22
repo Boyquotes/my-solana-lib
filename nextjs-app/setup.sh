@@ -1,9 +1,9 @@
 #!/bin/bash
 
-echo "Setting up Next.js app with Solana library..."
+echo "Setting up CyberGold SDK Next.js demo app..."
 
 # Navigate to library directory and build
-echo "Building the library..."
+echo "Building the CyberGold SDK library..."
 cd ..
 npm install
 npm run build
@@ -14,4 +14,4 @@ cd nextjs-app
 npm install
 
 echo "Setup complete!"
-echo "You can now run 'npm run dev' to start the development server."
+echo "You can now run 'npm run dev' to start the CyberGold SDK demo."

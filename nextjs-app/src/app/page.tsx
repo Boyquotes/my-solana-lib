@@ -18,9 +18,10 @@ export default function Home() {
     setResult(null)
 
     try {
-      // Dynamic import to avoid build issues
-      const { getTokenAccountInfo } = await import('my-solana-lib')
-      const data = await getTokenAccountInfo(rpcUrl, tokenAccount.trim())
+      // Dynamic import to avoid build issues and use the new CyberGoldSDK
+      const { CyberGoldSDK } = await import('my-solana-lib')
+      const sdk = new CyberGoldSDK()
+      const data = await sdk.getTokenAccountInfo(rpcUrl, tokenAccount.trim())
       setResult(data)
       console.log('Token Account Info:', data)
     } catch (err: any) {
@@ -32,8 +33,8 @@ export default function Home() {
 
   return (
     <div className="container">
-      <h1>Solana Token Account Info</h1>
-      <p>This demo uses the my-solana-lib library to fetch token account information.</p>
+      <h1>CyberGold Solana SDK Demo</h1>
+      <p>This demo uses the CyberGoldSDK from my-solana-lib to fetch token account information.</p>
       
       <div className="card">
         <form onSubmit={handleSubmit}>
@@ -63,7 +64,7 @@ export default function Home() {
           </div>
           
           <button type="submit" className="button" disabled={loading}>
-            {loading ? 'Loading...' : 'Get Token Info'}
+            {loading ? 'Loading...' : 'Get Token Info with CyberGold SDK'}
           </button>
         </form>
       </div>
@@ -77,7 +78,7 @@ export default function Home() {
 
       {result && (
         <div className="card">
-          <h2>Results:</h2>
+          <h2>Results from CyberGold SDK:</h2>
           
           <h3>Account Info:</h3>
           <div className="result">
