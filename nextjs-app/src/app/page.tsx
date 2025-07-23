@@ -10,6 +10,12 @@ export default function Home() {
   const [error, setError] = useState('')
   const [programId, setProgramId] = useState<string>('')
   const [adminPda, setAdminPda] = useState<string>('')
+  const [poolStateAddr, setPoolStateAddr] = useState<string>('')
+  const [poolParamsAddr, setPoolParamsAddr] = useState<string>('')
+  const [synthMintAddr, setSynthMintAddr] = useState<string>('')
+  const [collatMintAddr, setCollatMintAddr] = useState<string>('')
+  const [collatTokenProgramAddr, setCollatTokenProgramAddr] = useState<string>('')
+  const [synthTokenProgramAddr, setSynthTokenProgramAddr] = useState<string>('')
 
   const handleGetProgramId = async () => {
     try {
@@ -26,10 +32,76 @@ export default function Home() {
     try {
       const { CyberGoldSDK } = await import('my-solana-lib')
       const sdk = new CyberGoldSDK()
-      const adminPdaAddress = sdk.getAdminPda().toString()
+      const adminPdaAddress = sdk.adminAddr.toString()
       setAdminPda(adminPdaAddress)
     } catch (err: any) {
       setError(err?.message || 'Failed to get admin PDA')
+    }
+  }
+
+  const handleGetPoolStateAddr = async () => {
+    try {
+      const { CyberGoldSDK } = await import('my-solana-lib')
+      const sdk = new CyberGoldSDK()
+      const address = sdk.poolStateAddr.toString()
+      setPoolStateAddr(address)
+    } catch (err: any) {
+      setError(err?.message || 'Failed to get pool state address')
+    }
+  }
+
+  const handleGetPoolParamsAddr = async () => {
+    try {
+      const { CyberGoldSDK } = await import('my-solana-lib')
+      const sdk = new CyberGoldSDK()
+      const address = sdk.poolParamsAddr.toString()
+      setPoolParamsAddr(address)
+    } catch (err: any) {
+      setError(err?.message || 'Failed to get pool params address')
+    }
+  }
+
+  const handleGetSynthMintAddr = async () => {
+    try {
+      const { CyberGoldSDK } = await import('my-solana-lib')
+      const sdk = new CyberGoldSDK()
+      const address = sdk.synthMintAddr.toString()
+      setSynthMintAddr(address)
+    } catch (err: any) {
+      setError(err?.message || 'Failed to get synth mint address')
+    }
+  }
+
+  const handleGetCollatMintAddr = async () => {
+    try {
+      const { CyberGoldSDK } = await import('my-solana-lib')
+      const sdk = new CyberGoldSDK()
+      const address = sdk.collatMintAddr.toString()
+      setCollatMintAddr(address)
+    } catch (err: any) {
+      setError(err?.message || 'Failed to get collat mint address')
+    }
+  }
+
+  const handleGetCollatTokenProgramAddr = async () => {
+    try {
+      const { CyberGoldSDK } = await import('my-solana-lib')
+      const sdk = new CyberGoldSDK()
+      const address = sdk.collatTokenProgramAddr.toString()
+      setCollatTokenProgramAddr(address)
+    } catch (err: any) {
+      setError(err?.message || 'Failed to get collat token program address')
+    }
+  }
+
+  const handleGetSynthTokenProgramAddr = async () => {
+    try {
+      const { CyberGoldSDK } = await import('my-solana-lib')
+      const sdk = new CyberGoldSDK()
+      const address = sdk.synthTokenProgramAddr.toString()
+      setSynthTokenProgramAddr(address)
+    } catch (err: any) {
+      setError(err?.message || 'Failed to get synth token program address')
     }
   }
 
@@ -62,7 +134,7 @@ export default function Home() {
       
       <div className="card">
         <h3>Program Information</h3>
-        <div style={{ display: 'flex', gap: '1rem', marginBottom: '1rem', flexWrap: 'wrap' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginBottom: '1rem' }}>
           <button 
             type="button" 
             className="button" 
@@ -77,7 +149,51 @@ export default function Home() {
           >
             Get Admin PDA
           </button>
+          <button 
+            type="button" 
+            className="button" 
+            onClick={handleGetPoolStateAddr}
+          >
+            Get Pool State
+          </button>
+          <button 
+            type="button" 
+            className="button" 
+            onClick={handleGetPoolParamsAddr}
+          >
+            Get Pool Params
+          </button>
+          <button 
+            type="button" 
+            className="button" 
+            onClick={handleGetSynthMintAddr}
+          >
+            Get Synth Mint
+          </button>
+          <button 
+            type="button" 
+            className="button" 
+            onClick={handleGetCollatMintAddr}
+          >
+            Get Collat Mint
+          </button>
+          <button 
+            type="button" 
+            className="button" 
+            onClick={handleGetCollatTokenProgramAddr}
+          >
+            Get Collat Token Program
+          </button>
+          <button 
+            type="button" 
+            className="button" 
+            onClick={handleGetSynthTokenProgramAddr}
+          >
+            Get Synth Token Program
+          </button>
         </div>
+        
+        {/* Results Display */}
         {programId && (
           <div className="result">
             <strong>Program ID:</strong> {programId}
@@ -86,6 +202,36 @@ export default function Home() {
         {adminPda && (
           <div className="result">
             <strong>Admin PDA:</strong> {adminPda}
+          </div>
+        )}
+        {poolStateAddr && (
+          <div className="result">
+            <strong>Pool State Address:</strong> {poolStateAddr}
+          </div>
+        )}
+        {poolParamsAddr && (
+          <div className="result">
+            <strong>Pool Params Address:</strong> {poolParamsAddr}
+          </div>
+        )}
+        {synthMintAddr && (
+          <div className="result">
+            <strong>Synth Mint Address:</strong> {synthMintAddr}
+          </div>
+        )}
+        {collatMintAddr && (
+          <div className="result">
+            <strong>Collat Mint Address:</strong> {collatMintAddr}
+          </div>
+        )}
+        {collatTokenProgramAddr && (
+          <div className="result">
+            <strong>Collat Token Program:</strong> {collatTokenProgramAddr}
+          </div>
+        )}
+        {synthTokenProgramAddr && (
+          <div className="result">
+            <strong>Synth Token Program:</strong> {synthTokenProgramAddr}
           </div>
         )}
       </div>

@@ -8,7 +8,14 @@ export { idlData as cybergoldIdl };
 import type { Cybergold } from "./types/idl/cybergold";
 import { CyberGoldSdkOptions, AnyProvider} from './types/index.js';
 
+
 import { AccountService }       from './services/accountService';
+// import { PriceService }         from './services/priceService';
+// import { StakePoolService }     from './services/stakePoolService';
+// import { PoolService }          from './services/poolService';
+// import { VaultService }         from './services/vaultService';
+// import { InstructionService }   from './services/instructionService';
+// import { TransactionService }   from './services/transactionService';
 import { ProviderService }      from './services/providerService';
 
 /**
@@ -88,9 +95,20 @@ export class CyberGoldSDK {
       return this.programId;
   }
 
-  public getAdminPda(): PublicKey {
-      return this._accountService.getAdminPda();
-  }
+  // ========================================================================================
+  // ADRESSES & ACCOUNTS
+  // ========================================================================================
+
+  public get adminAddr()                      { return this._accountService.getAdminPda(); }
+  public get poolStateAddr()                  { return this._accountService.getPoolStatePda(); }
+  public get poolParamsAddr()                 { return this._accountService.getPoolParamsPda(); }
+  public get synthMintAddr()                  { return this._accountService.getSynthMint(); }
+  public get collatMintAddr()                 { return this._accountService.getCollatMint(); }
+  public get collatTokenProgramAddr()         { return this._accountService.getCollatTokenProgram(); }
+  public get synthTokenProgramAddr()          { return this._accountService.getSynthTokenProgram(); }    
+  public getCollatATA(userPk: PublicKey)      { return this._accountService.getCollatATA(userPk); }
+  public getSynthATA(userPk: PublicKey)       { return this._accountService.getSynthATA(userPk); }
+  public getUserVaultAddr(userPk: PublicKey)  { return this._accountService.getUserVaultPda(userPk); }
 
   // Add methods for interacting with the Solana blockchain
   async getTokenAccountInfo(rpcUrl: string, tokenAccount: string) {
