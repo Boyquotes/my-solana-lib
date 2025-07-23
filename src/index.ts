@@ -11,7 +11,7 @@ import { CyberGoldSdkOptions, AnyProvider} from './types/index.js';
 
 import { AccountService }       from './services/accountService';
 // import { PriceService }         from './services/priceService';
-// import { StakePoolService }     from './services/stakePoolService';
+import { StakePoolService }     from './services/stakePoolService';
 // import { PoolService }          from './services/poolService';
 // import { VaultService }         from './services/vaultService';
 // import { InstructionService }   from './services/instructionService';
@@ -58,7 +58,7 @@ export class CyberGoldSDK {
     // services
     private _providerService:           ProviderService;
     // private _priceService:              PriceService;
-    // private _stakePoolService:          StakePoolService;
+    private _stakePoolService:          StakePoolService;
     // private _poolService:               PoolService;
     // private _vaultService:              VaultService;
     // private _instructionService = new   InstructionService();
@@ -87,6 +87,12 @@ export class CyberGoldSDK {
         this.programId, 
         this.userPk,
     );
+    // Instanciate the StakePoolService
+    this._stakePoolService = new StakePoolService(
+        this.connection,
+        () => this.poolParamsData(),
+    );
+
   }
 
   public get userPk()         { return this._providerService.getUserPk(); }
@@ -109,6 +115,14 @@ export class CyberGoldSDK {
   public getCollatATA(userPk: PublicKey)      { return this._accountService.getCollatATA(userPk); }
   public getSynthATA(userPk: PublicKey)       { return this._accountService.getSynthATA(userPk); }
   public getUserVaultAddr(userPk: PublicKey)  { return this._accountService.getUserVaultPda(userPk); }
+
+    // // ========================================================================================
+    // // POOL SERVICE
+    // // ========================================================================================
+    
+    // public poolStateData()      { return this._poolService.readPoolState(); }
+    // public poolParamsData()     { return this._poolService.readPoolParams(); }
+    // public getPoolMetrics()     { return this._poolService.getPoolMetrics(); }
 
   // Add methods for interacting with the Solana blockchain
   async getTokenAccountInfo(rpcUrl: string, tokenAccount: string) {
