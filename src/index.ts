@@ -88,6 +88,10 @@ export class CyberGoldSDK {
       return this.programId;
   }
 
+  public getAdminPda(): PublicKey {
+      return this._accountService.getAdminPda();
+  }
+
   // Add methods for interacting with the Solana blockchain
   async getTokenAccountInfo(rpcUrl: string, tokenAccount: string) {
     return getTokenAccountInfo(rpcUrl, tokenAccount);

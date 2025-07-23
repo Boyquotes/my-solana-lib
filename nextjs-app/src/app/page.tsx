@@ -9,6 +9,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [programId, setProgramId] = useState<string>('')
+  const [adminPda, setAdminPda] = useState<string>('')
 
   const handleGetProgramId = async () => {
     try {
@@ -18,6 +19,17 @@ export default function Home() {
       setProgramId(id)
     } catch (err: any) {
       setError(err?.message || 'Failed to get program ID')
+    }
+  }
+
+  const handleGetAdminPda = async () => {
+    try {
+      const { CyberGoldSDK } = await import('my-solana-lib')
+      const sdk = new CyberGoldSDK()
+      const adminPdaAddress = sdk.getAdminPda().toString()
+      setAdminPda(adminPdaAddress)
+    } catch (err: any) {
+      setError(err?.message || 'Failed to get admin PDA')
     }
   }
 
@@ -50,17 +62,30 @@ export default function Home() {
       
       <div className="card">
         <h3>Program Information</h3>
-        <button 
-          type="button" 
-          className="button" 
-          onClick={handleGetProgramId}
-          style={{ marginBottom: '1rem' }}
-        >
-          Get Program ID
-        </button>
+        <div style={{ display: 'flex', gap: '1rem', marginBottom: '1rem', flexWrap: 'wrap' }}>
+          <button 
+            type="button" 
+            className="button" 
+            onClick={handleGetProgramId}
+          >
+            Get Program ID
+          </button>
+          <button 
+            type="button" 
+            className="button" 
+            onClick={handleGetAdminPda}
+          >
+            Get Admin PDA
+          </button>
+        </div>
         {programId && (
           <div className="result">
             <strong>Program ID:</strong> {programId}
+          </div>
+        )}
+        {adminPda && (
+          <div className="result">
+            <strong>Admin PDA:</strong> {adminPda}
           </div>
         )}
       </div>
