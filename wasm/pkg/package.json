@@ -1,0 +1,17 @@
+{
+  "name": "wasm-bindgen-injector",
+  "description": "A wasm-bindgen wrapper exposing CyberGold functions to JavaScript.",
+  "version": "0.1.0",
+  "license": "SEE LICENSE IN ../../LICENSE",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-org/my_wasm_wrapper4"
+  },
+  "files": [
+    "cybergold_wasm_bg.wasm",
+    "cybergold_wasm.js",
+    "cybergold_wasm.d.ts"
+  ],
+  "main": "cybergold_wasm.js",
+  "types": "cybergold_wasm.d.ts"
+}
