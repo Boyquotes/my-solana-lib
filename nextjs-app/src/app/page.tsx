@@ -16,6 +16,10 @@ export default function Home() {
   const [collatMintAddr, setCollatMintAddr] = useState<string>('')
   const [collatTokenProgramAddr, setCollatTokenProgramAddr] = useState<string>('')
   const [synthTokenProgramAddr, setSynthTokenProgramAddr] = useState<string>('')
+  // WASM addNumbers demo state
+  const [num1, setNum1] = useState<string>('')
+  const [num2, setNum2] = useState<string>('')
+  const [sum, setSum] = useState<number | null>(null)
 
   const handleGetProgramId = async () => {
     try {
@@ -91,6 +95,24 @@ export default function Home() {
       setCollatTokenProgramAddr(address)
     } catch (err: any) {
       setError(err?.message || 'Failed to get collat token program address')
+    }
+  }
+
+  // Handler: add two numbers via WASM addNumbers
+  const handleAddNumbers = async () => {
+    try {
+      setError('')
+      const { addNumbers } = await import('my-solana-lib')
+      const a = Number(num1)
+      const b = Number(num2)
+      if (Number.isNaN(a) || Number.isNaN(b)) {
+        setError('Please enter valid numbers')
+        return
+      }
+      const result = await addNumbers(a, b)
+      setSum(result)
+    } catch (err: any) {
+      setError(err?.message || 'Failed to add numbers')
     }
   }
 
@@ -268,6 +290,43 @@ export default function Home() {
           </button>
         </form>
       </div>
+
+      {/* WASM addNumbers demo */}
+      <div className="card">
+        <h3>WASM addNumbers Demo</h3>
+        <div>
+          <label htmlFor="num1">Number A:</label>
+          <input
+            id="num1"
+            type="number"
+            className="input"
+            value={num1}
+            onChange={(e) => setNum1(e.target.value)}
+            placeholder="Enter first number"
+          />
+        </div>
+        <div>
+          <label htmlFor="num2">Number B:</label>
+          <input
+            id="num2"
+            type="number"
+            className="input"
+            value={num2}
+            onChange={(e) => setNum2(e.target.value)}
+            placeholder="Enter second number"
+          />
+        </div>
+        <button type="button" className="button" onClick={handleAddNumbers}>
+          Add with WASM
+        </button>
+        {sum !== null && (
+          <div className="result">
+            <strong>Sum:</strong> {sum}
+          </div>
+        )}
+      </div>
+
+      {/* Existing error/result sections */}
 
       {error && (
         <div className="error">
