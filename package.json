@@ -16,7 +16,7 @@
     "dist/"
   ],
   "scripts": {
-    "prebuild": "mkdir -p dist && cp wasm-add/wasm-add-pkg/wasm_add_bg.wasm dist/",
+    "prebuild": "mkdir -p dist && cp wasm-add/wasm-add-pkg/wasm_add_bg.wasm dist/ && cp wasm-cybergold/cybergold_wasm_bg.wasm dist/",
     "build": "rollup -c",
     "clean": "rm -rf dist"
   },

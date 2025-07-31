@@ -1,14 +1,18 @@
-import { Connection, PublicKey } from "@solana/web3.js";
-import { getAccount, getMint } from "@solana/spl-token";
-import { BN, Program, Idl } from "@coral-xyz/anchor";
+import { PublicKey, Connection } from '@solana/web3.js';
+import { getAccount, getMint } from '@solana/spl-token';
+import { BN, Program, Idl, Provider } from '@coral-xyz/anchor';
 
+// Import WASM modules
+import init, { add } from '../wasm-add/wasm-add-pkg/wasm_add.js';
+import initCybergold from '../wasm-cybergold/cybergold_wasm.js';
+
+// Import constants and types
 import { DEFAULT_PROGRAM_ID } from "./config/constants";
 import idlData from './types/idl/cybergold.json';
 export { idlData as cybergoldIdl };
 import type { Cybergold } from "./types/idl/cybergold";
-import { CyberGoldSdkOptions, AnyProvider} from './types/index.js';
+import { CyberGoldSdkOptions, AnyProvider } from './types/index.js';
 
-import init, { add } from '../wasm-add/wasm-add-pkg/wasm_add.js';
 
 import { AccountService }       from './services/accountService';
 // import { PriceService }         from './services/priceService';
@@ -42,7 +46,7 @@ export async function ensureNodeFetch() {
   }
 }
 
-// WASM helper
+// WASM helpers
 let _wasmReady: Promise<void> | null = null;
 async function initWasm(): Promise<void> {
   if (!_wasmReady) {
@@ -52,12 +56,31 @@ async function initWasm(): Promise<void> {
   }
   return _wasmReady;
 }
+
+// Cybergold WASM initialization
+let _cybergoldWasmReady: Promise<void> | null = null;
+async function initCybergoldWasm(): Promise<void> {
+  if (!_cybergoldWasmReady) {
+    // In browser environments like Next.js, the JS module is loaded from dist/
+    // so the WASM file needs to be in the same directory
+    _cybergoldWasmReady = initCybergold('./cybergold_wasm_bg.wasm').then(() => void 0);
+  }
+  return _cybergoldWasmReady;
+}
 /**
  * Add two numbers using the WASM `add` function.
  */
 export async function addNumbers(a: number, b: number): Promise<number> {
   await initWasm();
   return add(a, b);
+}
+
+/**
+ * Initialize the Cybergold WASM module.
+ * Call this before using any Cybergold WASM functions.
+ */
+export async function initializeCybergoldWasm(): Promise<void> {
+  return initCybergoldWasm();
 }
 
 // export class CyberGoldSDK extends EventEmitter {
