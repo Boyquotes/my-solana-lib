@@ -8,6 +8,7 @@ export { idlData as cybergoldIdl };
 import type { Cybergold } from "./types/idl/cybergold";
 import { CyberGoldSdkOptions, AnyProvider} from './types/index.js';
 
+import init, { add } from '../wasm-add/wasm-add-pkg/wasm_add.js';
 
 import { AccountService }       from './services/accountService';
 // import { PriceService }         from './services/priceService';
@@ -39,6 +40,22 @@ export async function ensureNodeFetch() {
     const fetchModule = await import("node-fetch");
     globalThis.fetch = fetchModule.default || fetchModule;
   }
+}
+
+// WASM helper
+let _wasmReady: Promise<void> | null = null;
+async function initWasm(): Promise<void> {
+  if (!_wasmReady) {
+    _wasmReady = init().then(() => void 0);
+  }
+  return _wasmReady;
+}
+/**
+ * Add two numbers using the WASM `add` function.
+ */
+export async function addNumbers(a: number, b: number): Promise<number> {
+  await initWasm();
+  return add(a, b);
 }
 
 // export class CyberGoldSDK extends EventEmitter {
