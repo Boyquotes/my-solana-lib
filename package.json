@@ -12,7 +12,11 @@
       "import": "./dist/index.esm.js"
     }
   },
+  "files": [
+    "dist/"
+  ],
   "scripts": {
+    "prebuild": "mkdir -p dist && cp wasm-add/wasm-add-pkg/wasm_add_bg.wasm dist/",
     "build": "rollup -c",
     "clean": "rm -rf dist"
   },

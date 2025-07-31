@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { CyberGoldSDK, addNumbers } from 'my-solana-lib'
 
 export default function Home() {
   const [tokenAccount, setTokenAccount] = useState('HYRYA9qpEUqPJ8rZ7hVdnhQy8iKYUvngvHUaiHQbAVy4')
@@ -102,7 +103,6 @@ export default function Home() {
   const handleAddNumbers = async () => {
     try {
       setError('')
-      const { addNumbers } = await import('my-solana-lib')
       const a = Number(num1)
       const b = Number(num2)
       if (Number.isNaN(a) || Number.isNaN(b)) {

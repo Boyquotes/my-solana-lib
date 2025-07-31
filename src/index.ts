@@ -46,7 +46,9 @@ export async function ensureNodeFetch() {
 let _wasmReady: Promise<void> | null = null;
 async function initWasm(): Promise<void> {
   if (!_wasmReady) {
-    _wasmReady = init().then(() => void 0);
+    // In browser environments like Next.js, the JS module is loaded from dist/
+    // so the WASM file needs to be in the same directory
+    _wasmReady = init('./wasm_add_bg.wasm').then(() => void 0);
   }
   return _wasmReady;
 }

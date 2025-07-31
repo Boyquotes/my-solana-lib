@@ -2,3 +2,7 @@ src/
 rollup.config.js
 tsconfig.json
 *.ts
+
+# Don't exclude WASM files
+!*.wasm
+!wasm-add/wasm-add-pkg/*.wasm
