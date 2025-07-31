@@ -15,7 +15,7 @@ export default {
       sourcemap: true,
     },
   ],
-  plugins: [typescript(), json()],
+  plugins: [typescript({ check: false }), json()],
   external: [
     '@solana/web3.js',
     '@solana/spl-token',

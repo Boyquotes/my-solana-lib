@@ -4,7 +4,7 @@ import { BN, Program, Idl, Provider } from '@coral-xyz/anchor';
 
 // Import WASM modules
 import init, { add } from '../wasm-add/wasm-add-pkg/wasm_add.js';
-import initCybergold from '../wasm-cybergold/cybergold_wasm.js';
+import initCybergold from '../wasm/pkg/cybergold_wasm.js';
 
 // Import constants and types
 import { DEFAULT_PROGRAM_ID } from "./config/constants";
