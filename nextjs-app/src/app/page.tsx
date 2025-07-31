@@ -21,6 +21,8 @@ export default function Home() {
   const [num1, setNum1] = useState<string>('')
   const [num2, setNum2] = useState<string>('')
   const [sum, setSum] = useState<number | null>(null)
+  // Staking rewards state
+  const [stakingRewards, setStakingRewards] = useState<string>('')
 
   const handleGetProgramId = async () => {
     try {
@@ -116,6 +118,44 @@ export default function Home() {
     }
   }
 
+  // Handler for getting staking rewards
+  const handleGetStakingRewards = async () => {
+    try {
+      setError('')
+      setLoading(true)
+      
+      // Dynamic import with debug logging
+      const myLib = await import('my-solana-lib')
+      
+      // Create a wrapper function to safely access pool metrics
+      const getPoolMetricsAndStakingRewards = async () => {
+        // Create SDK instance
+        const sdk = new myLib.CyberGoldSDK({
+          rpcUrl: rpcUrl
+        })
+        
+        // First, try using the getPoolMetrics method which should be public
+        try {
+          const poolMetrics = await sdk.getPoolMetrics()
+          return poolMetrics?.stakingRewards || BigInt(0)
+        } catch (e) {
+          console.error('Error getting pool metrics:', e)
+          throw new Error('Failed to get pool metrics')
+        }
+      }
+      
+      // Get staking rewards
+      const stakingRewardsValue = await getPoolMetricsAndStakingRewards()
+      setStakingRewards(stakingRewardsValue.toString())
+      
+    } catch (err: any) {
+      console.error('Staking rewards error:', err)
+      setError(err?.message || 'Failed to get staking rewards')
+    } finally {
+      setLoading(false)
+    }
+  }
+  
   const handleGetSynthTokenProgramAddr = async () => {
     try {
       const { CyberGoldSDK } = await import('my-solana-lib')
@@ -322,6 +362,24 @@ export default function Home() {
         {sum !== null && (
           <div className="result">
             <strong>Sum:</strong> {sum}
+          </div>
+        )}
+      </div>
+
+      {/* Staking Rewards Component */}
+      <div className="card">
+        <h3>CyberGold Staking Rewards</h3>
+        <button 
+          type="button" 
+          className="button" 
+          onClick={handleGetStakingRewards}
+          disabled={loading}
+        >
+          {loading ? 'Loading...' : 'Get Staking Rewards'}
+        </button>
+        {stakingRewards && (
+          <div className="result">
+            <strong>Staking Rewards:</strong> {stakingRewards}
           </div>
         )}
       </div>
