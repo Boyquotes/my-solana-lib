@@ -1,0 +1,12 @@
+[package]
+name = "wasm-add"
+version = "0.1.0"
+authors = ["CyberGold <dev@cybergold.io>"]
+edition = "2021"
+license = "MIT OR Apache-2.0"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+wasm-bindgen = "0.2"
