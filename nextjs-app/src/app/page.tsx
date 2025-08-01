@@ -1,13 +1,14 @@
 'use client'
 
 import { useState } from 'react'
-import { CyberGoldSDK, addNumbers, Addition, computePoolUR } from 'my-solana-lib'
+import { CyberGoldSDK, addNumbers, Addition, computePoolUR, PoolService } from 'my-solana-lib'
 
 export default function Home() {
   const [tokenAccount, setTokenAccount] = useState('HYRYA9qpEUqPJ8rZ7hVdnhQy8iKYUvngvHUaiHQbAVy4')
   const [rpcUrl, setRpcUrl] = useState(process.env.NEXT_PUBLIC_RPC || 'https://api.mainnet-beta.solana.com')
   const [result, setResult] = useState<any>(null)
   const [loading, setLoading] = useState(false)
+  const [poolServiceUR, setPoolServiceUR] = useState<string | null>(null)
   const [error, setError] = useState('')
   const [programId, setProgramId] = useState<string>('')
   const [adminPda, setAdminPda] = useState<string>('')
@@ -180,6 +181,34 @@ export default function Home() {
       setUtilizationRate(ur)
     } catch (err: any) {
       setError(err?.message || 'Failed to compute utilization rate')
+    }
+  }
+  
+  // Handler: use PoolService class to compute pool utilization rate
+  const handlePoolServiceUR = async () => {
+    try {
+      setError('')
+      const collateral = parseFloat(collateralAmount)
+      const synthetic = parseFloat(syntheticAmount)
+      if (isNaN(collateral) || isNaN(synthetic)) {
+        setError('Please enter valid amounts')
+        return
+      }
+      
+      // Create instance of PoolService
+      const poolService = new PoolService()
+      
+      // Print hello message to console
+      poolService.sayHello()
+      
+      // Compute utilization rate using the service
+      const ur = await poolService.appel_compute_pool_ur(collateral, synthetic)
+      
+      // Format the result as a percentage
+      const formattedUR = poolService.formatUtilizationRate(ur)
+      setPoolServiceUR(formattedUR)
+    } catch (err: any) {
+      setError(err?.message || 'Failed to compute utilization rate with PoolService')
     }
   }
 
@@ -433,12 +462,22 @@ export default function Home() {
             placeholder="Enter synthetic amount"
           />
         </div>
-        <button type="button" className="button" onClick={handleComputePoolUR}>
-          Compute Utilization Rate
-        </button>
+        <div className="button-group">
+          <button type="button" className="button" onClick={handleComputePoolUR}>
+            Compute with Direct WASM call
+          </button>
+          <button type="button" className="button" onClick={handlePoolServiceUR}>
+            Compute with PoolService
+          </button>
+        </div>
         {utilizationRate !== null && (
           <div className="result">
-            <strong>Utilization Rate:</strong> {(utilizationRate * 100).toFixed(2)}%
+            <strong>Direct WASM Result:</strong> {(utilizationRate * 100).toFixed(2)}%
+          </div>
+        )}
+        {poolServiceUR !== null && (
+          <div className="result">
+            <strong>PoolService Result:</strong> {poolServiceUR}
           </div>
         )}
       </div>

@@ -15,14 +15,14 @@ import initCybergoldWasm, { compute_pool_ur } from '../wasm-cybergold/cybergold_
 import { AccountService }       from './services/accountService';
 // import { PriceService }         from './services/priceService';
 // import { StakePoolService }     from './services/stakePoolService';
-// import { PoolService }          from './services/poolService';
+import { PoolService }          from './services/poolService';
 // import { VaultService }         from './services/vaultService';
 // import { InstructionService }   from './services/instructionService';
 // import { TransactionService }   from './services/transactionService';
 import { ProviderService }      from './services/providerService';
 
 // Export services for external use
-export { ProviderService };
+export { ProviderService, PoolService };
 
 // Export WASM functions
 export { add, compute_pool_ur };
