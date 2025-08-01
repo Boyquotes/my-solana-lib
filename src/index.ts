@@ -47,9 +47,21 @@ export async function ensureNodeFetch() {
 let _wasmReady: Promise<void> | null = null;
 async function initWasm(): Promise<void> {
   if (!_wasmReady) {
-    // In browser environments like Next.js, the JS module is loaded from dist/
-    // so the WASM file needs to be in the same directory
-    _wasmReady = init('./wasm_add_bg.wasm').then(() => void 0);
+    try {
+      // Try to determine the environment to use the appropriate path
+      const wasmPath = 
+        // Browser environment with base URL for proper path resolution
+        (typeof document !== 'undefined' && document.currentScript) 
+          ? new URL('../dist/wasm_add_bg.wasm', import.meta.url).href
+          // Node.js environment - use a path relative to the consuming package
+          : new URL('./wasm_add_bg.wasm', import.meta.url).href;
+      
+      _wasmReady = init(wasmPath).then(() => void 0);
+    } catch (err) {
+      // Fallback to a simple relative path as last resort
+      console.warn('WASM initialization error, trying fallback:', err);
+      _wasmReady = init('./wasm_add_bg.wasm').then(() => void 0);
+    }
   }
   return _wasmReady;
 }
