@@ -22,6 +22,7 @@ import { ProviderService }      from './providerService';
 
 
 import * as wasm from '../../wasm/pkg/cybergold_wasm.js';
+import { CybergoldWasmInitializer } from '../index';
 
 
 export class PriceService {
@@ -152,6 +153,9 @@ export class PriceService {
     const stakeLam    = BigInt(poolState.stakePoolLamports.toString());
     const stakeSupply = BigInt(poolState.lstSupply.toString());
 
+    // Ensure WASM is initialized before using WASM functions
+    await CybergoldWasmInitializer.getInstance().ensureInitialized();
+    
     // Call into WASM
     const expo = wasm.compute_collat_per_synth_price_exponent(
       BigInt(refUpdate.priceMessage.price.toString()),
@@ -168,6 +172,7 @@ export class PriceService {
       poolParams.synthMintDecimals,
     );
 
+    // WASM initialization is already ensured before the first WASM call
     const conf = wasm.compute_collat_per_synth_price_conf(
       BigInt(refUpdate.priceMessage.price.toString()),
       BigInt(refUpdate.priceMessage.conf.toString()),
@@ -183,6 +188,7 @@ export class PriceService {
       poolParams.synthMintDecimals,
     );
 
+    // WASM initialization is already ensured before the first WASM call
     const mantissa = wasm.compute_collat_per_synth_price_mantissa(
       BigInt(refUpdate.priceMessage.price.toString()),
       BigInt(refUpdate.priceMessage.conf.toString()),
@@ -247,6 +253,9 @@ export class PriceService {
    * collateral tokens you must supply on‑chain to mint them.
    */
   public async convertSynthToCollat(synthAmount: bigint): Promise<bigint> {
+      // Ensure WASM is initialized before using WASM functions
+      await CybergoldWasmInitializer.getInstance().ensureInitialized();
+      
       // get the raw price tuple { mantissa, conf, expo }
       const { mantissa, conf, expo } = await this.getPriceData();
   

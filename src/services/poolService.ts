@@ -8,6 +8,7 @@ import type { AccountService } from './accountService';
 
 // require the wasm glue-code
 import * as wasm from '../../wasm/pkg/cybergold_wasm.js';
+import { CybergoldWasmInitializer } from '../index';
 
 /**
  * Service to derive and fetch on-chain PoolState and PoolParams data.
@@ -110,6 +111,9 @@ export class PoolService {
     const stakeLamBI    = BigInt(stakeData.totalLamports.toString());
     const stakeSupBI    = BigInt(stakeData.poolTokenSupply.toString());
 
+    // Ensure WASM is initialized before using WASM functions
+    await CybergoldWasmInitializer.getInstance().ensureInitialized();
+    
     // core computations
     const liabilities     = wasm.compute_pool_liabilities(supplyBI, priceData.mantissa, priceData.conf, priceData.expo);
     const equity          = wasm.compute_pool_equity(poolCollatAmount, liabilities);

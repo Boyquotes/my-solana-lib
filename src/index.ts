@@ -46,38 +46,138 @@ export async function ensureNodeFetch() {
   }
 }
 
-// WASM helpers
+// WASM helpers - Singleton implementation
 let _wasmReady: Promise<void> | null = null;
-async function initWasm(): Promise<void> {
-  if (!_wasmReady) {
-    // In browser environments like Next.js, the JS module is loaded from dist/
-    // so the WASM file needs to be in the same directory
-    _wasmReady = init('./wasm_add_bg.wasm').then(() => void 0);
-  }
-  return _wasmReady;
-}
 
-// Cybergold WASM initialization
-let _cybergoldWasmReady: Promise<void> | null = null;
-async function initCybergoldWasm(): Promise<void> {
-  if (!_cybergoldWasmReady) {
-    try {
+/**
+ * WASM initialization singleton
+ * This class ensures WASM is initialized only once and provides a consistent interface
+ * for checking initialization and ensuring WASM is ready before use.
+ */
+export class WasmInitializer {
+  private static _instance: WasmInitializer;
+  private _initialized = false;
+
+  private constructor() {}
+
+  /**
+   * Get the singleton instance
+   */
+  public static getInstance(): WasmInitializer {
+    if (!WasmInitializer._instance) {
+      WasmInitializer._instance = new WasmInitializer();
+    }
+    return WasmInitializer._instance;
+  }
+
+  /**
+   * Initialize the WASM module
+   */
+  public async initialize(): Promise<void> {
+    if (!_wasmReady) {
       // In browser environments like Next.js, the JS module is loaded from dist/
       // so the WASM file needs to be in the same directory
-      _cybergoldWasmReady = initCybergold('./cybergold_wasm_bg.wasm').then(() => void 0);
-      return _cybergoldWasmReady;
-    } catch (error) {
-      console.error('Failed to initialize Cybergold WASM:', error);
-      throw new Error('Failed to initialize Cybergold WASM: ' + (error as Error).message);
+      _wasmReady = init('./wasm_add_bg.wasm').then(() => {
+        this._initialized = true;
+        return void 0;
+      });
     }
+    return _wasmReady;
   }
-  return _cybergoldWasmReady;
+
+  /**
+   * Check if WASM is already initialized
+   */
+  public isInitialized(): boolean {
+    return this._initialized;
+  }
+
+  /**
+   * Ensure WASM is initialized before continuing
+   */
+  public async ensureInitialized(): Promise<void> {
+    return this.initialize();
+  }
+}
+
+/**
+ * Legacy wrapper function for backward compatibility
+ */
+async function initWasm(): Promise<void> {
+  return WasmInitializer.getInstance().initialize();
+}
+
+// Cybergold WASM initialization - Singleton implementation
+let _cybergoldWasmReady: Promise<void> | null = null;
+
+/**
+ * Cybergold WASM initialization singleton
+ * This class ensures Cybergold WASM is initialized only once and provides a consistent interface
+ * for checking initialization and ensuring WASM is ready before use.
+ */
+export class CybergoldWasmInitializer {
+  private static _instance: CybergoldWasmInitializer;
+  private _initialized = false;
+
+  private constructor() {}
+
+  /**
+   * Get the singleton instance
+   */
+  public static getInstance(): CybergoldWasmInitializer {
+    if (!CybergoldWasmInitializer._instance) {
+      CybergoldWasmInitializer._instance = new CybergoldWasmInitializer();
+    }
+    return CybergoldWasmInitializer._instance;
+  }
+
+  /**
+   * Initialize the Cybergold WASM module
+   */
+  public async initialize(): Promise<void> {
+    if (!_cybergoldWasmReady) {
+      try {
+        // In browser environments like Next.js, the JS module is loaded from dist/
+        // so the WASM file needs to be in the same directory
+        _cybergoldWasmReady = initCybergold('./cybergold_wasm_bg.wasm').then(() => {
+          this._initialized = true;
+          return void 0;
+        });
+        return _cybergoldWasmReady;
+      } catch (error) {
+        console.error('Failed to initialize Cybergold WASM:', error);
+        throw new Error('Failed to initialize Cybergold WASM: ' + (error as Error).message);
+      }
+    }
+    return _cybergoldWasmReady;
+  }
+
+  /**
+   * Check if WASM is already initialized
+   */
+  public isInitialized(): boolean {
+    return this._initialized;
+  }
+
+  /**
+   * Ensure WASM is initialized before continuing
+   */
+  public async ensureInitialized(): Promise<void> {
+    return this.initialize();
+  }
+}
+
+/**
+ * Legacy wrapper function for backward compatibility
+ */
+async function initCybergoldWasm(): Promise<void> {
+  return CybergoldWasmInitializer.getInstance().initialize();
 }
 /**
  * Add two numbers using the WASM `add` function.
  */
 export async function addNumbers(a: number, b: number): Promise<number> {
-  await initWasm();
+  await WasmInitializer.getInstance().ensureInitialized();
   return add(a, b);
 }
 
@@ -86,7 +186,7 @@ export async function addNumbers(a: number, b: number): Promise<number> {
  * Call this before using any Cybergold WASM functions.
  */
 export async function initializeCybergoldWasm(): Promise<void> {
-  return initCybergoldWasm();
+  return CybergoldWasmInitializer.getInstance().ensureInitialized();
 }
 
 // export class CyberGoldSDK extends EventEmitter {
