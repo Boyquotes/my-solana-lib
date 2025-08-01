@@ -182,6 +182,25 @@ export async function addNumbers(a: number, b: number): Promise<number> {
 }
 
 /**
+ * Simple addition class
+ */
+export class Addition {
+    /**
+     * Adds two numbers using pure JavaScript
+     */
+    public addi(a: number, b: number): number {
+        return a + b;
+    }
+}
+
+/**
+ * Helper function to create an Addition instance
+ */
+export function createAddition(): Addition {
+    return new Addition();
+}
+
+/**
  * Initialize the Cybergold WASM module.
  * Call this before using any Cybergold WASM functions.
  */

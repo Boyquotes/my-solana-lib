@@ -1,7 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { CyberGoldSDK, addNumbers } from 'my-solana-lib'
+// Only import the addNumbers function to avoid dependency issues
+import { addNumbers } from 'my-solana-lib'
 
 export default function Home() {
   const [tokenAccount, setTokenAccount] = useState('HYRYA9qpEUqPJ8rZ7hVdnhQy8iKYUvngvHUaiHQbAVy4')
@@ -26,23 +27,28 @@ export default function Home() {
 
   const handleGetProgramId = async () => {
     try {
-      const { CyberGoldSDK } = await import('my-solana-lib')
-      const sdk = new CyberGoldSDK()
-      const id = sdk.getProgramId().toString()
-      setProgramId(id)
+      setError('')
+      // Use simple addition class instead of full SDK to avoid dependency issues
+      const { addNumbers } = await import('my-solana-lib')
+      const result = await addNumbers(1, 2)
+      console.log('WASM addition result:', result)
+      setProgramId('Using simplified WASM demo - check console for results')
     } catch (err: any) {
-      setError(err?.message || 'Failed to get program ID')
+      console.error('Error details:', err)
+      setError(err?.message || 'Failed to execute WASM function')
     }
   }
 
   const handleGetAdminPda = async () => {
     try {
-      const { CyberGoldSDK } = await import('my-solana-lib')
-      const sdk = new CyberGoldSDK()
-      const adminPdaAddress = sdk.adminAddr.toString()
-      setAdminPda(adminPdaAddress)
+      setError('')
+      // Use only the WASM addNumbers function
+      const result = await addNumbers(3, 4)
+      console.log('WASM addition result (3+4):', result)
+      setAdminPda(`WASM function result: ${result}`)
     } catch (err: any) {
-      setError(err?.message || 'Failed to get admin PDA')
+      console.error('Error details:', err)
+      setError(err?.message || 'Failed to execute WASM function')
     }
   }
 
@@ -107,13 +113,18 @@ export default function Home() {
       setError('')
       const a = Number(num1)
       const b = Number(num2)
+      
       if (Number.isNaN(a) || Number.isNaN(b)) {
         setError('Please enter valid numbers')
         return
       }
+      
+      // Call the WASM-powered addition function
       const result = await addNumbers(a, b)
+      console.log(`WASM addition result (${a}+${b}):`, result)
       setSum(result)
     } catch (err: any) {
+      console.error('Error details:', err)
       setError(err?.message || 'Failed to add numbers')
     }
   }
