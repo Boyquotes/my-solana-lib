@@ -9,7 +9,8 @@ export { idlData as cybergoldIdl };
 import type { Cybergold } from "./types/idl/cybergold";
 import { CyberGoldSdkOptions, AnyProvider} from './types/index.js';
 
-import init, { add } from '../wasm-add/wasm-add-pkg/wasm_add.js';
+import initAddWasm, { add } from '../wasm-add/wasm-add-pkg/wasm_add.js';
+import initCybergoldWasm, { compute_pool_ur } from '../wasm-cybergold/cybergold_wasm.js';
 
 import { AccountService }       from './services/accountService';
 // import { PriceService }         from './services/priceService';
@@ -22,6 +23,9 @@ import { ProviderService }      from './services/providerService';
 
 // Export services for external use
 export { ProviderService };
+
+// Export WASM functions
+export { add, compute_pool_ur };
 
 /**
  * Example function: get SPL token account info and mint info
@@ -46,36 +50,65 @@ export async function ensureNodeFetch() {
   }
 }
 
-// WASM helper
-let _wasmReady: Promise<void> | null = null;
-async function initWasm(): Promise<void> {
-  if (!_wasmReady) {
+// Initialize the WASM modules
+let _addWasmReady: Promise<void> | null = null;
+let _cybergoldWasmReady: Promise<void> | null = null;
+
+export async function ensureAddWasmInitialized(): Promise<void> {
+  if (!_addWasmReady) {
     try {
-      // Try to determine the environment to use the appropriate path
-      const wasmPath = 
-        // Browser environment with base URL for proper path resolution
-        (typeof document !== 'undefined' && document.currentScript) 
+      // Determine the correct path to the wasm file
+      const wasmPath = typeof window !== 'undefined'
+          // Browser environment - use import.meta.url
           ? new URL('../dist/wasm_add_bg.wasm', import.meta.url).href
           // Node.js environment - use a path relative to the consuming package
           : new URL('./wasm_add_bg.wasm', import.meta.url).href;
       
-      _wasmReady = init(wasmPath).then(() => void 0);
+      _addWasmReady = initAddWasm(wasmPath).then(() => undefined);
     } catch (err) {
       // Fallback to a simple relative path as last resort
-      console.warn('WASM initialization error, trying fallback:', err);
-      _wasmReady = init('./wasm_add_bg.wasm').then(() => void 0);
+      console.warn('WASM add initialization error, trying fallback:', err);
+      _addWasmReady = initAddWasm('./wasm_add_bg.wasm').then(() => undefined);
     }
   }
-  return _wasmReady;
+  return _addWasmReady;
 }
+
+export async function ensureCybergoldWasmInitialized(): Promise<void> {
+  if (!_cybergoldWasmReady) {
+    try {
+      // Determine the correct path to the wasm file
+      const wasmPath = typeof window !== 'undefined'
+          // Browser environment - use import.meta.url
+          ? new URL('../dist/cybergold_wasm_bg.wasm', import.meta.url).href
+          // Node.js environment - use a path relative to the consuming package
+          : new URL('./cybergold_wasm_bg.wasm', import.meta.url).href;
+      
+      _cybergoldWasmReady = initCybergoldWasm(wasmPath).then(() => undefined);
+    } catch (err) {
+      // Fallback to a simple relative path as last resort
+      console.warn('WASM cybergold initialization error, trying fallback:', err);
+      _cybergoldWasmReady = initCybergoldWasm('./cybergold_wasm_bg.wasm').then(() => undefined);
+    }
+  }
+  return _cybergoldWasmReady;
+}
+
 /**
  * Add two numbers using the WASM `add` function.
  */
 export async function addNumbers(a: number, b: number): Promise<number> {
-  await initWasm();
+  await ensureAddWasmInitialized();
   return add(a, b);
 }
 
+/**
+ * Compute pool utilization rate using the WASM `compute_pool_ur` function.
+ */
+export async function computePoolUR(collateralAmount: number, syntheticAmount: number): Promise<number> {
+  await ensureCybergoldWasmInitialized();
+  return Number(compute_pool_ur(BigInt(collateralAmount), BigInt(syntheticAmount)));
+}
 
 export class Addition {
   constructor() {}
@@ -85,7 +118,7 @@ export class Addition {
   }
 
   async additionNumbers(a: number, b: number): Promise<number> {
-    await initWasm();
+    await ensureAddWasmInitialized();
     return add(a, b);
   }
 

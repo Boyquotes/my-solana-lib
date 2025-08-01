@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { CyberGoldSDK, addNumbers, Addition } from 'my-solana-lib'
+import { CyberGoldSDK, addNumbers, Addition, computePoolUR } from 'my-solana-lib'
 
 export default function Home() {
   const [tokenAccount, setTokenAccount] = useState('HYRYA9qpEUqPJ8rZ7hVdnhQy8iKYUvngvHUaiHQbAVy4')
@@ -23,6 +23,10 @@ export default function Home() {
   const [num1, setNum1] = useState<string>('')
   const [num2, setNum2] = useState<string>('')
   const [sum, setSum] = useState<number | null>(null)
+  // Pool utilization rate state
+  const [collateralAmount, setCollateralAmount] = useState<string>('1')
+  const [syntheticAmount, setSyntheticAmount] = useState<string>('1')
+  const [utilizationRate, setUtilizationRate] = useState<number | null>(null)
   // Addition class method results
   const [jsSum, setJsSum] = useState<number | null>(null)
   const [wasmSum, setWasmSum] = useState<number | null>(null)
@@ -149,16 +153,33 @@ export default function Home() {
   const handleAddNumbers = async () => {
     try {
       setError('')
-      const a = Number(num1)
-      const b = Number(num2)
-      if (Number.isNaN(a) || Number.isNaN(b)) {
+      const n1 = parseFloat(num1)
+      const n2 = parseFloat(num2)
+      if (isNaN(n1) || isNaN(n2)) {
         setError('Please enter valid numbers')
         return
       }
-      const result = await addNumbers(a, b)
-      setSum(result)
+      const sum = await addNumbers(n1, n2)
+      setSum(sum)
     } catch (err: any) {
       setError(err?.message || 'Failed to add numbers')
+    }
+  }
+
+  // Handler: compute pool utilization rate via WASM computePoolUR
+  const handleComputePoolUR = async () => {
+    try {
+      setError('')
+      const collateral = parseFloat(collateralAmount)
+      const synthetic = parseFloat(syntheticAmount)
+      if (isNaN(collateral) || isNaN(synthetic)) {
+        setError('Please enter valid amounts')
+        return
+      }
+      const ur = await computePoolUR(collateral, synthetic)
+      setUtilizationRate(ur)
+    } catch (err: any) {
+      setError(err?.message || 'Failed to compute utilization rate')
     }
   }
 
@@ -383,6 +404,41 @@ export default function Home() {
         {sum !== null && (
           <div className="result">
             <strong>Sum:</strong> {sum}
+          </div>
+        )}
+      </div>
+
+      {/* Pool Utilization Rate demo */}
+      <div className="card">
+        <h3>Pool Utilization Rate Demo</h3>
+        <div>
+          <label htmlFor="collateralAmount">Collateral Amount:</label>
+          <input
+            id="collateralAmount"
+            type="number"
+            className="input"
+            value={collateralAmount}
+            onChange={(e) => setCollateralAmount(e.target.value)}
+            placeholder="Enter collateral amount"
+          />
+        </div>
+        <div>
+          <label htmlFor="syntheticAmount">Synthetic Amount:</label>
+          <input
+            id="syntheticAmount"
+            type="number"
+            className="input"
+            value={syntheticAmount}
+            onChange={(e) => setSyntheticAmount(e.target.value)}
+            placeholder="Enter synthetic amount"
+          />
+        </div>
+        <button type="button" className="button" onClick={handleComputePoolUR}>
+          Compute Utilization Rate
+        </button>
+        {utilizationRate !== null && (
+          <div className="result">
+            <strong>Utilization Rate:</strong> {(utilizationRate * 100).toFixed(2)}%
           </div>
         )}
       </div>
