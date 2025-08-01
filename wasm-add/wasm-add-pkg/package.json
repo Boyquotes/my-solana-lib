@@ -1,0 +1,18 @@
+{
+  "name": "wasm-add",
+  "collaborators": [
+    "CyberGold <dev@cybergold.io>"
+  ],
+  "version": "0.1.0",
+  "license": "MIT OR Apache-2.0",
+  "files": [
+    "wasm_add_bg.wasm",
+    "wasm_add.js",
+    "wasm_add.d.ts"
+  ],
+  "module": "wasm_add.js",
+  "types": "wasm_add.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}
