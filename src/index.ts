@@ -20,6 +20,9 @@ import { AccountService }       from './services/accountService';
 // import { TransactionService }   from './services/transactionService';
 import { ProviderService }      from './services/providerService';
 
+// Export services for external use
+export { ProviderService };
+
 /**
  * Example function: get SPL token account info and mint info
  */
@@ -73,11 +76,27 @@ export async function addNumbers(a: number, b: number): Promise<number> {
   return add(a, b);
 }
 
+
+export class Addition {
+  constructor() {}
+
+  async addJSNumbers(a: number, b: number): Promise<number> {
+    return a + b;
+  }
+
+  async additionNumbers(a: number, b: number): Promise<number> {
+    await initWasm();
+    return add(a, b);
+  }
+
+
+}
+
 // export class CyberGoldSDK extends EventEmitter {
 export class CyberGoldSDK {
   public readonly programId: PublicKey;
   public readonly connection: Connection;
-  // public readonly program: Program<Cybergold>;
+  public program: Program<Cybergold>; // Removed readonly to allow initialization in _initializeProgram
 
     // ========================================================================================
     // ATTRIBUTES
@@ -108,11 +127,8 @@ export class CyberGoldSDK {
     this.connection         = this._providerService.getConnection();
     this.provider           = this._providerService.getProvider();
 
-
-    // this.program = new Program<Cybergold>(
-    //   idlData as Idl,
-    //   // this.anchorProvider
-    // );
+    // Initialize with placeholder until properly initialized
+    this.program = {} as Program<Cybergold>;
 
     // Instantiate the AccountService
     this._accountService = new AccountService(
@@ -121,7 +137,58 @@ export class CyberGoldSDK {
     );
   }
 
-  public get userPk()         { return this._providerService.getUserPk(); }
+  /**
+   * Static factory method for async initialization
+   * @param options SDK initialization options
+   * @returns A fully initialized SDK instance
+   */
+  public static async initialize(options: CyberGoldSdkOptions = {}): Promise<CyberGoldSDK> {
+    const sdk = new CyberGoldSDK(options);
+    await sdk._initializeProgram();
+    return sdk;
+  }
+
+  /**
+   * Initialize the Anchor Program with proper AnchorProvider
+   * @private
+   */
+  private async _initializeProgram(): Promise<void> {
+    const anchorProvider = await this._providerService.getAnchorProvider();
+    
+    this.program = new Program<Cybergold>(
+      idlData as Idl,
+      anchorProvider
+    );
+  }
+
+  /**
+   * Get the PublicKey of the user
+   */
+  public get userPk(): PublicKey | undefined {
+    return this._providerService.getUserPk();
+  }
+
+  /**
+   * Connect to a browser wallet
+   * @returns Public key of the connected wallet or undefined
+   */
+  public async connectWallet(): Promise<PublicKey | undefined> {
+    return this._providerService.connectWallet();
+  }
+
+  /**
+   * Disconnect from current browser wallet
+   */
+  public async disconnectWallet(): Promise<void> {
+    return this._providerService.disconnectWallet();
+  }
+
+  /**
+   * Check if wallet is connected
+   */
+  public isWalletConnected(): boolean {
+    return this._providerService.isWalletConnected();
+  }
 
   public getProgramId(): PublicKey {
       return this.programId;

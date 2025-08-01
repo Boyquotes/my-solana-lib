@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { CyberGoldSDK, addNumbers } from 'my-solana-lib'
+import { CyberGoldSDK, addNumbers, Addition } from 'my-solana-lib'
 
 export default function Home() {
   const [tokenAccount, setTokenAccount] = useState('HYRYA9qpEUqPJ8rZ7hVdnhQy8iKYUvngvHUaiHQbAVy4')
@@ -17,10 +17,15 @@ export default function Home() {
   const [collatMintAddr, setCollatMintAddr] = useState<string>('')
   const [collatTokenProgramAddr, setCollatTokenProgramAddr] = useState<string>('')
   const [synthTokenProgramAddr, setSynthTokenProgramAddr] = useState<string>('')
+  const [userPk, setUserPk] = useState<string>('')
+  const [isWalletConnected, setIsWalletConnected] = useState<boolean>(false)
   // WASM addNumbers demo state
   const [num1, setNum1] = useState<string>('')
   const [num2, setNum2] = useState<string>('')
   const [sum, setSum] = useState<number | null>(null)
+  // Addition class method results
+  const [jsSum, setJsSum] = useState<number | null>(null)
+  const [wasmSum, setWasmSum] = useState<number | null>(null)
 
   const handleGetProgramId = async () => {
     try {
@@ -99,6 +104,47 @@ export default function Home() {
     }
   }
 
+  const handleGetUserPk = async () => {
+    try {
+      setError('')
+      const { CyberGoldSDK } = await import('my-solana-lib')
+      // Use the new async initialization pattern
+      const sdk = await CyberGoldSDK.initialize()
+      const publicKey = sdk.userPk?.toString() || 'No wallet connected'
+      setUserPk(publicKey)
+    } catch (err: any) {
+      setError(err?.message || 'Failed to get user public key')
+    }
+  }
+
+  // Handle connecting to a wallet
+  const handleConnectWallet = async () => {
+    try {
+      setError('')
+      const { CyberGoldSDK } = await import('my-solana-lib')
+      const sdk = await CyberGoldSDK.initialize()
+      
+      // Use SDK methods directly instead of accessing provider service
+      if (isWalletConnected) {
+        // Disconnect if already connected
+        await sdk.disconnectWallet()
+        setIsWalletConnected(false)
+        setUserPk('Disconnected')
+      } else {
+        // Connect to wallet
+        const publicKey = await sdk.connectWallet()
+        if (publicKey) {
+          setUserPk(publicKey.toString())
+          setIsWalletConnected(true)
+        } else {
+          setUserPk('Failed to connect')
+        }
+      }
+    } catch (err: any) {
+      setError(err?.message || 'Failed to connect/disconnect wallet')
+    }
+  }
+
   // Handler: add two numbers via WASM addNumbers
   const handleAddNumbers = async () => {
     try {
@@ -124,6 +170,42 @@ export default function Home() {
       setSynthTokenProgramAddr(address)
     } catch (err: any) {
       setError(err?.message || 'Failed to get synth token program address')
+    }
+  }
+
+  // Handler: add two numbers using Addition.addJSNumbers
+  const handleAddJSNumbers = async () => {
+    try {
+      setError('')
+      const a = Number(num1)
+      const b = Number(num2)
+      if (Number.isNaN(a) || Number.isNaN(b)) {
+        setError('Please enter valid numbers')
+        return
+      }
+      const addition = new Addition()
+      const result = await addition.addJSNumbers(a, b)
+      setJsSum(result)
+    } catch (err: any) {
+      setError(err?.message || 'Failed to add numbers with JS')
+    }
+  }
+
+  // Handler: add two numbers using Addition.additionNumbers
+  const handleAdditionNumbers = async () => {
+    try {
+      setError('')
+      const a = Number(num1)
+      const b = Number(num2)
+      if (Number.isNaN(a) || Number.isNaN(b)) {
+        setError('Please enter valid numbers')
+        return
+      }
+      const addition = new Addition()
+      const result = await addition.additionNumbers(a, b)
+      setWasmSum(result)
+    } catch (err: any) {
+      setError(err?.message || 'Failed to add numbers with WASM via Addition class')
     }
   }
 
@@ -157,61 +239,35 @@ export default function Home() {
       <div className="card">
         <h3>Program Information</h3>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginBottom: '1rem' }}>
-          <button 
-            type="button" 
-            className="button" 
-            onClick={handleGetProgramId}
-          >
+          <button type="button" className="button" onClick={handleGetProgramId}>
             Get Program ID
           </button>
-          <button 
-            type="button" 
-            className="button" 
-            onClick={handleGetAdminPda}
-          >
+          <button type="button" className="button" onClick={handleGetAdminPda}>
             Get Admin PDA
           </button>
-          <button 
-            type="button" 
-            className="button" 
-            onClick={handleGetPoolStateAddr}
-          >
+          <button type="button" className="button" onClick={handleGetPoolStateAddr}>
             Get Pool State
           </button>
-          <button 
-            type="button" 
-            className="button" 
-            onClick={handleGetPoolParamsAddr}
-          >
+          <button type="button" className="button" onClick={handleGetPoolParamsAddr}>
             Get Pool Params
           </button>
-          <button 
-            type="button" 
-            className="button" 
-            onClick={handleGetSynthMintAddr}
-          >
+          <button type="button" className="button" onClick={handleGetSynthMintAddr}>
             Get Synth Mint
           </button>
-          <button 
-            type="button" 
-            className="button" 
-            onClick={handleGetCollatMintAddr}
-          >
+          <button type="button" className="button" onClick={handleGetCollatMintAddr}>
             Get Collat Mint
           </button>
-          <button 
-            type="button" 
-            className="button" 
-            onClick={handleGetCollatTokenProgramAddr}
-          >
+          <button type="button" className="button" onClick={handleGetCollatTokenProgramAddr}>
             Get Collat Token Program
           </button>
-          <button 
-            type="button" 
-            className="button" 
-            onClick={handleGetSynthTokenProgramAddr}
-          >
+          <button type="button" className="button" onClick={handleGetSynthTokenProgramAddr}>
             Get Synth Token Program
+          </button>
+          <button type="button" className="button" onClick={handleGetUserPk}>
+            Get User Public Key
+          </button>
+          <button type="button" className="button" onClick={handleConnectWallet}>
+            {isWalletConnected ? 'Disconnect Wallet' : 'Connect Wallet'}
           </button>
         </div>
         
@@ -254,6 +310,11 @@ export default function Home() {
         {synthTokenProgramAddr && (
           <div className="result">
             <strong>Synth Token Program:</strong> {synthTokenProgramAddr}
+          </div>
+        )}
+        {userPk && (
+          <div className="result">
+            <strong>User Public Key:</strong> {userPk}
           </div>
         )}
       </div>
@@ -322,6 +383,30 @@ export default function Home() {
         {sum !== null && (
           <div className="result">
             <strong>Sum:</strong> {sum}
+          </div>
+        )}
+      </div>
+
+      {/* Addition Class Methods Demo */}
+      <div className="card">
+        <h3>Addition Class Methods Demo</h3>
+        <p>Use the same numbers from above inputs</p>
+        <div className="button-group">
+          <button type="button" className="button" onClick={handleAddJSNumbers}>
+            Add with JS (Addition class)
+          </button>
+          <button type="button" className="button" onClick={handleAdditionNumbers}>
+            Add with WASM (Addition class)
+          </button>
+        </div>
+        {jsSum !== null && (
+          <div className="result">
+            <strong>JS Sum:</strong> {jsSum}
+          </div>
+        )}
+        {wasmSum !== null && (
+          <div className="result">
+            <strong>WASM Sum via Addition class:</strong> {wasmSum}
           </div>
         )}
       </div>
