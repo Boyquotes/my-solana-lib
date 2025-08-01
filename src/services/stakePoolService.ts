@@ -1,6 +1,6 @@
 // src/services/stakePoolService.ts
 import { Connection, PublicKey } from '@solana/web3.js';
-import { BN } from '@coral-xyz/anchor';
+import BN from "bn.js";
 import type { PoolParams, StakePoolData } from '../types';
 import { debugLog } from '../config/logging';
 

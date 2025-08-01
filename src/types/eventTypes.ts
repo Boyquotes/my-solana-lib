@@ -1,6 +1,6 @@
 // src/types/eventTypes.ts
 
-import type { BN } from '@coral-xyz/anchor';
+import BN from 'bn.js';
 import { PublicKey } from '@solana/web3.js';
 
 /**

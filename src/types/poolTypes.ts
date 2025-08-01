@@ -1,6 +1,6 @@
 // src/types/poolTypes.ts
 
-import type { BN } from '@coral-xyz/anchor';
+import type BN from 'bn.js';
 
 
 // Mirror of on-chain PoolState (from your IDL)

@@ -1,6 +1,6 @@
 // src/types/priceTypes.ts
 
-import type { BN } from '@coral-xyz/anchor';
+import type BN from 'bn.js';
 import { PublicKey } from '@solana/web3.js';
 
 // SDK price data structures

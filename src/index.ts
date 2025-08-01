@@ -1,6 +1,7 @@
 import { Connection, PublicKey } from "@solana/web3.js";
 import { getAccount, getMint } from "@solana/spl-token";
-import { BN, Program, Idl } from "@coral-xyz/anchor";
+import { Program, Idl } from "@coral-xyz/anchor";
+import BN from "bn.js";
 
 import { DEFAULT_PROGRAM_ID } from "./config/constants";
 import idlData from './types/idl/cybergold.json';
